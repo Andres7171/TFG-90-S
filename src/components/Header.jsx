@@ -1,48 +1,58 @@
-import { Search, User } from "lucide-react";
-import { useState } from "react";
+import { User } from "lucide-react";
 import { motion } from "framer-motion";
+import { NavLink } from "react-router-dom";
 import "./../styles/Header.css";
 
+const NAV_LINKS = [
+  { label: "Inicio",             to: "/",                end: true },
+  { label: "90's Type Shit",     to: "/90s" },
+  { label: "Blog",               to: "/blog" },
+  { label: "Eventos",            to: "/eventos" },
+  { label: "Marcas",             to: "/marcas" },
+  { label: "Atención al Cliente",to: "/atencion-cliente" },
+]
+
 export function Header() {
-  const [searchQuery, setSearchQuery] = useState("");
-
   return (
-     <div className="contenedor">
-    <motion.header
-      initial={{ y: -50, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      className="header border-bottom py-2 px-4"
-    >
-      <div className="container-fluid">
-        <div className="row align-items-center">
+    <div className="contenedor">
+      <motion.header
+        initial={{ y: -50, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        className="header border-bottom py-2 px-4"
+      >
+        <div className="container-fluid">
+          <div className="row align-items-center">
 
-          <div className="col-3">
-            <h1 className="logo-text m-2">
-              90'S TYPE SHIT
-            </h1>
+            <div className="col-3">
+              <h1 className="logo-text m-2">90'S TYPE SHIT</h1>
+            </div>
+
+            <div className="col-7">
+              <nav className="d-flex align-items-center justify-content-center gap-3">
+                {NAV_LINKS.map(({ label, to, end }) => (
+                  <NavLink
+                    key={to}
+                    to={to}
+                    end={end}
+                    className={({ isActive }) =>
+                      `nav-item-custom ${isActive ? "nav-item-active" : ""}`
+                    }
+                  >
+                    {label}
+                  </NavLink>
+                ))}
+              </nav>
+            </div>
+
+            <div className="col-2 text-end">
+              <button className="user-btn-round">
+                <User size={20} />
+              </button>
+            </div>
+
           </div>
-
-          <div className="col-8 position-relative">
-            <Search size={18} className="search-icon-inside" />
-            <input
-              type="text"
-              placeholder="Buscar productos..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="search-input-field w-100"
-            />
-          </div>
-
-          {/* USER → 1 columna */}
-          <div className="col-1 text-end">
-            <button className="user-btn-round">
-              <User size={20} />
-            </button>
-          </div>
-
         </div>
-      </div>
-    </motion.header>
+      </motion.header>
     </div>
   );
 }

@@ -1,0 +1,11 @@
+.ninetys-page {
+  background-color: #000;
+  min-height: 100vh;
+  color: #fff;
+}
+
+.ninetys-title {
+  font-family: Impact, sans-serif;
+  color: yellow;
+  font-size: 3rem;
+}

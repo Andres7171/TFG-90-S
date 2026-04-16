@@ -1,35 +1,30 @@
-/* LOGO */
 .logo-text {
   font-family: 'Impact', sans-serif;
   font-size: 1.8rem;
   color: yellow;
 }
-.header{
+
+.header {
   background-color: #000;
 }
-.contenedor{
+
+.contenedor {
   background-color: #000;
 }
 
-/* ICONO LUPA (esto sí es necesario para meterlo dentro del input) */
-.search-icon-inside {
-  position: absolute;
-  left: 22px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #64748b;
-  pointer-events: none;
+.nav-item-custom {
+  color: #ccc;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
 }
 
-/* INPUT */
-.search-input-field {
-  background-color: #f1f5f9;
-  border: 1px solid #cbd5e1;
-  padding: 5px 1px 5px 35px;
-  font-size: 1em;
+.nav-item-custom:hover,
+.nav-item-active {
+  color: yellow;
 }
 
-/* BOTÓN USUARIO */
 .user-btn-round {
   width: 42px;
   height: 42px;
@@ -38,8 +33,7 @@
   border: 1px solid #cbd5e1;
 }
 
-/* HOVER */
 .user-btn-round:hover {
-  border-color: #000;
+  border-color: yellow;
   background-color: #e2e8f0;
 }

@@ -1,0 +1,11 @@
+.blog-page {
+  background-color: #000;
+  min-height: 100vh;
+  color: #fff;
+}
+
+.blog-title {
+  font-family: Impact, sans-serif;
+  color: yellow;
+  font-size: 3rem;
+}
