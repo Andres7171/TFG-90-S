@@ -1,0 +1,72 @@
+.auth-wrapper {
+  background: #000;
+}
+
+.auth-card {
+  background: #111;
+  border: 2px solid yellow;
+  max-width: 440px;
+  width: 100%;
+}
+
+.auth-title {
+  font-family: Impact, sans-serif;
+  color: yellow;
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Labels dentro del card */
+.auth-card .form-label {
+  color: #aaa;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+}
+
+/* Inputs oscuros — override de Bootstrap form-control */
+.auth-input {
+  background-color: #1a1a1a;
+  border-color: #333;
+  color: #fff;
+}
+
+.auth-input:focus {
+  background-color: #1a1a1a;
+  color: #fff;
+  border-color: yellow;
+  box-shadow: none;
+}
+
+/* Botón */
+.auth-btn {
+  background-color: yellow;
+  color: #000;
+  font-family: Impact, sans-serif;
+  font-size: 1.1rem;
+  border: none;
+}
+
+.auth-btn:hover,
+.auth-btn:focus,
+.auth-btn:active {
+  background-color: #e6e600;
+  color: #000;
+  box-shadow: none;
+}
+
+.auth-btn:disabled {
+  background-color: yellow;
+  color: #000;
+  opacity: 0.5;
+}
+
+/* Enlace inferior */
+.auth-switch {
+  color: #666;
+  font-size: 0.85rem;
+}
+
+.auth-switch a {
+  color: yellow;
+  text-decoration: none;
+}
