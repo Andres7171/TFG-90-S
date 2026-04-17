@@ -7,8 +7,7 @@ const SLIDER_ITEMS = [
   "HIP HOP CULTURE",
 ];
 
-// Repetimos 8 veces para que el track sea suficientemente largo
-// La animación mueve -50%, así que necesitamos que la mitad ya cubra el ancho
+
 const items = [...Array(8)].flatMap(() => SLIDER_ITEMS);
 
 export function Slider() {

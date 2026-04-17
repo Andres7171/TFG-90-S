@@ -16,14 +16,12 @@
   margin-bottom: 1.5rem;
 }
 
-/* Labels dentro del card */
 .auth-card .form-label {
   color: #aaa;
   font-size: 0.8rem;
   text-transform: uppercase;
 }
 
-/* Inputs oscuros — override de Bootstrap form-control */
 .auth-input {
   background-color: #1a1a1a;
   border-color: #333;
@@ -37,7 +35,6 @@
   box-shadow: none;
 }
 
-/* Botón */
 .auth-btn {
   background-color: yellow;
   color: #000;
@@ -60,7 +57,6 @@
   opacity: 0.5;
 }
 
-/* Enlace inferior */
 .auth-switch {
   color: #666;
   font-size: 0.85rem;

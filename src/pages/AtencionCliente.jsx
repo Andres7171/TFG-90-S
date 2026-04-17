@@ -21,10 +21,10 @@ export function AtencionCliente() {
     setError(null)
     try {
       await emailjs.send(
-        EMAILJS_SERVICE_ID,
+        EMAILJS_SERVICIO_ID,
         EMAILJS_TEMPLATE_ID,
         { from_name: form.name, from_email: form.email, message: form.message },
-        EMAILJS_PUBLIC_KEY
+        EMAILJS_KCLAVE
       )
       setSubmitted(true)
     } catch {
