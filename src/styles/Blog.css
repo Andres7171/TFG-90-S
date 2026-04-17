@@ -7,5 +7,30 @@
 .blog-title {
   font-family: Impact, sans-serif;
   color: yellow;
-  font-size: 3rem;
+  font-size: 3.5rem;
+}
+
+.blog-eyebrow {
+  color: #888;
+  font-size: 1rem;
+  text-transform: uppercase;
+}
+
+.blog-section {
+  border-left: 3px solid yellow;
+  padding-left: 1.5rem;
+  max-width: 800px;
+}
+
+.blog-section-title {
+  font-family: Impact, sans-serif;
+  color: yellow;
+  font-size: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.blog-text {
+  color: #ccc;
+  font-size: 1rem;
+  line-height: 1.8;
 }

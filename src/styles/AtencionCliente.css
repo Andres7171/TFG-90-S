@@ -9,3 +9,62 @@
   color: yellow;
   font-size: 3rem;
 }
+
+.atencion-subtitle {
+  color: #aaa;
+  font-size: 1rem;
+}
+
+.atencion-card {
+  background-color: #111;
+  border: 1px solid #222;
+  max-width: 600px;
+}
+
+.atencion-label {
+  color: #aaa;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+}
+
+.atencion-input {
+  background-color: #1a1a1a;
+  border-color: #333;
+  color: #fff;
+}
+
+.atencion-input:focus {
+  background-color: #1a1a1a;
+  color: #fff;
+  border-color: yellow;
+  box-shadow: none;
+}
+
+.atencion-btn {
+  background-color: yellow;
+  color: #000;
+  font-family: Impact, sans-serif;
+  font-size: 1.1rem;
+  border: none;
+}
+
+.atencion-btn:hover {
+  background-color: #e6e600;
+  color: #000;
+}
+
+.atencion-btn:disabled {
+  background-color: yellow;
+  color: #000;
+  opacity: 0.5;
+}
+
+.atencion-success {
+  max-width: 600px;
+}
+
+.atencion-success-text {
+  color: yellow;
+  font-family: Impact, sans-serif;
+  font-size: 1.3rem;
+}
