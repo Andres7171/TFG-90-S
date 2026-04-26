@@ -5,7 +5,8 @@ export async function getActiveProducts() {
     .from('product')
     .select(`
       id, name, price, image_url, category, clothing_type, decade,
-      brand:brand_id (id, name, web_url)
+      brand:brand_id (id, name, web_url),
+      variants:product_variant (id, size, stock)
     `)
     .eq('active', true)
     .order('created_at', { ascending: false })

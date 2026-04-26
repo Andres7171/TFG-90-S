@@ -90,6 +90,12 @@ export function ProductDetail() {
             )}
             <p className="product-detail-price">{product.price} €</p>
 
+            {product.description && (
+              <p style={{ color: '#ccc', fontSize: '0.95rem', lineHeight: '1.6', marginBottom: '1.25rem' }}>
+                {product.description}
+              </p>
+            )}
+
             {hasVariants ? (
               <>
                 <p className="product-detail-label">Talla</p>
