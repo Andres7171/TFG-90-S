@@ -1,20 +1,19 @@
 import { supabase } from '../lib/supabase-client'
 
 export async function registerUser({ email, password, name, surname }) {
-  const { data: authData, error: authError } = await supabase.auth.signUp({ email, password })
-  if (authError) throw authError
+  const { data: authData, error } = await supabase.auth.signUp({
+    email,
+    password,
+    options: { data: { name } }
+  })
+  if (error) throw error
 
-  const { error: dbError } = await supabase
-    .from('user')
-    .insert({
-      id: authData.user.id,
-      email,
-      name,
-      surname,
-      rol: 'customer',
-      created_date: new Date().toISOString(),
-    })
-  if (dbError) throw dbError
+  if (authData.user && surname) {
+    await supabase
+      .from('profile')
+      .update({ surname })
+      .eq('id', authData.user.id)
+  }
 
   return authData.user
 }
@@ -32,7 +31,7 @@ export async function logoutUser() {
 
 export async function getUserProfile(userId) {
   const { data, error } = await supabase
-    .from('user')
+    .from('profile')
     .select('*')
     .eq('id', userId)
     .single()

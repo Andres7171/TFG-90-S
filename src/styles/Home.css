@@ -55,3 +55,12 @@
   border-color: yellow;
   box-shadow: none;
 }
+
+.product-brand {
+  color: #888;
+  font-size: 0.78rem;
+}
+
+.product-card {
+  cursor: pointer;
+}

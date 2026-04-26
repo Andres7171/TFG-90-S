@@ -2,9 +2,9 @@ import { useState } from 'react'
 import emailjs from '@emailjs/browser'
 import '../styles/AtencionCliente.css'
 
-const EMAILJS_SERVICE_ID  = ''
-const EMAILJS_TEMPLATE_ID = ''
-const EMAILJS_PUBLIC_KEY  = ''
+const EMAILJS_SERVICE_ID  = 'service_mseebnc'
+const EMAILJS_TEMPLATE_ID = 'template_ru1q2gr'
+const EMAILJS_PUBLIC_KEY  = 'ZT-9TsL6BXsLOJ4ng'
 
 export function AtencionCliente() {
   const [form, setForm]       = useState({ name: '', email: '', message: '' })
@@ -21,15 +21,16 @@ export function AtencionCliente() {
     setError(null)
     try {
       await emailjs.send(
-        EMAILJS_SERVICIO_ID,
+        EMAILJS_SERVICE_ID,
         EMAILJS_TEMPLATE_ID,
         { from_name: form.name, from_email: form.email, message: form.message },
-        EMAILJS_KCLAVE
+        EMAILJS_PUBLIC_KEY
       )
       setSubmitted(true)
-    } catch {
-      setError('Error al enviar el mensaje. Inténtalo de nuevo.')
-    } finally {
+    } catch (err) {
+  console.error('EmailJS error:', err)
+  setError('Error al enviar el mensaje. Inténtalo de nuevo.')
+} finally {
       setLoading(false)
     }
   }
