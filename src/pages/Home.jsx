@@ -13,7 +13,7 @@ export function Home() {
 
   useEffect(() => {
     getActiveProducts()
-      .then((data) => setProducts(data))
+      .then(setProducts)
       .catch((err) => setError(err.message))
       .finally(() => setLoading(false))
   }, [])

@@ -12,7 +12,7 @@ export function Colaboradores() {
 
   useEffect(() => {
     getCollaborators()
-      .then((data) => setBrands(data))
+      .then(setBrands)
       .catch((err) => setError(err.message))
       .finally(() => setLoading(false))
   }, [])

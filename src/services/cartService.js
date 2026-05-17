@@ -5,7 +5,7 @@ export async function getCartItems(userId) {
     .from('cart')
     .select('id')
     .eq('user_id', userId)
-    .single()
+    .maybeSingle()
 
   if (!cart) return []
 
@@ -26,11 +26,21 @@ export async function getCartItems(userId) {
 }
 
 export async function addItemToCart(userId, variantId) {
-  const { data: cart } = await supabase
+  let { data: cart } = await supabase
     .from('cart')
     .select('id')
     .eq('user_id', userId)
-    .single()
+    .maybeSingle()
+
+  if (!cart) {
+    const { data: newCart, error: cartError } = await supabase
+      .from('cart')
+      .insert({ user_id: userId })
+      .select('id')
+      .single()
+    if (cartError) throw cartError
+    cart = newCart
+  }
 
   const { data: existing } = await supabase
     .from('cart_item')

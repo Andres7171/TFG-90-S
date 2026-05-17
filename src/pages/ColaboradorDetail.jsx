@@ -14,7 +14,7 @@ export function ColaboradorDetail() {
 
   useEffect(() => {
     getCollaboratorById(id)
-      .then((data) => setBrand(data))
+      .then(setBrand)
       .catch((err) => setError(err.message))
       .finally(() => setLoading(false))
   }, [id])

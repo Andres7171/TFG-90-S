@@ -13,10 +13,7 @@ export function NinetyS() {
 
   useEffect(() => {
     getActiveProducts()
-      .then((data) => {
-        const propios = data.filter((p) => p.variants && p.variants.length > 0)
-        setProducts(propios)
-      })
+      .then((data) => setProducts(data.filter((p) => p.brand?.type === 'Propia')))
       .catch((err) => setError(err.message))
       .finally(() => setLoading(false))
   }, [])

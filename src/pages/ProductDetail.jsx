@@ -22,7 +22,7 @@ export function ProductDetail() {
 
   useEffect(() => {
     getProductById(id)
-      .then((data) => setProduct(data))
+      .then(setProduct)
       .catch((err) => setError(err.message))
       .finally(() => setLoading(false))
   }, [id])
@@ -56,7 +56,8 @@ export function ProductDetail() {
       </div>
     )
 
-  const hasVariants = product.variants && product.variants.length > 0
+  const isOwn = product.brand?.type === 'Propia'
+  const hasVariants = Array.isArray(product.variants) && product.variants.length > 0
 
   return (
     <div className="product-detail-page">
@@ -96,7 +97,7 @@ export function ProductDetail() {
               </p>
             )}
 
-            {hasVariants ? (
+            {isOwn && hasVariants ? (
               <>
                 <p className="product-detail-label">Talla</p>
                 <div className="d-flex flex-wrap gap-2 mb-4">

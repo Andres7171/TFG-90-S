@@ -1,0 +1,567 @@
+/* ── Wrapper ──────────────────────────────────────────────────────────────── */
+.admin-wrapper {
+  min-height: 100vh;
+  background-color: #0a0a0a;
+  color: #e0e0e0;
+}
+
+/* ── Header ───────────────────────────────────────────────────────────────── */
+.admin-header {
+  background-color: #000;
+  border-bottom: 2px solid #FFD700;
+  padding: 0.75rem 1.5rem;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.admin-logo {
+  font-family: 'Impact', sans-serif;
+  font-size: 1.4rem;
+  color: #FFD700;
+  letter-spacing: 1px;
+}
+
+.admin-badge {
+  display: inline-block;
+  margin-left: 0.75rem;
+  background-color: #FFD700;
+  color: #000;
+  font-size: 0.65rem;
+  font-weight: 700;
+  font-family: 'Impact', sans-serif;
+  letter-spacing: 1px;
+  padding: 2px 8px;
+  border-radius: 3px;
+  vertical-align: middle;
+}
+
+/* ── Nav links ────────────────────────────────────────────────────────────── */
+.admin-nav-link {
+  color: #aaa;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  text-decoration: none;
+  letter-spacing: 0.5px;
+  padding: 4px 0;
+  border-bottom: 2px solid transparent;
+  transition: color 0.2s, border-color 0.2s;
+  white-space: nowrap;
+}
+
+.admin-nav-link:hover,
+.admin-nav-active {
+  color: #FFD700;
+  border-bottom-color: #FFD700;
+}
+
+/* ── Header right ─────────────────────────────────────────────────────────── */
+.admin-user-name {
+  font-size: 0.82rem;
+  color: #aaa;
+}
+
+.admin-logout-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  border: 1px solid #555;
+  color: #ccc;
+  font-size: 0.78rem;
+  padding: 5px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.admin-logout-btn:hover {
+  border-color: #FFD700;
+  color: #FFD700;
+}
+
+/* ── Main ─────────────────────────────────────────────────────────────────── */
+.admin-main {
+  padding: 2rem 1.5rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* ── Page header (título + buscador) ─────────────────────────────────────── */
+.admin-page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.75rem;
+  flex-wrap: wrap;
+}
+
+.admin-page-title {
+  font-family: 'Impact', sans-serif;
+  font-size: 1.6rem;
+  color: #FFD700;
+  letter-spacing: 1px;
+  margin: 0;
+}
+
+.admin-search {
+  background-color: #1a1a1a;
+  border: 1px solid #333;
+  color: #e0e0e0;
+  padding: 0.45rem 0.9rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  width: 280px;
+  transition: border-color 0.2s;
+}
+
+.admin-search:focus {
+  outline: none;
+  border-color: #FFD700;
+}
+
+.admin-search::placeholder {
+  color: #555;
+}
+
+/* ── Estados ──────────────────────────────────────────────────────────────── */
+.admin-add-btn {
+  background-color: #FFD700;
+  color: #000;
+  border: none;
+  font-family: 'Impact', sans-serif;
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+  padding: 0.45rem 1.25rem;
+  border-radius: 4px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: opacity 0.2s;
+}
+
+.admin-add-btn:hover {
+  opacity: 0.85;
+}
+
+.admin-loading {
+  color: #FFD700;
+  font-size: 0.95rem;
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.admin-error {
+  color: #f87171;
+  font-size: 0.9rem;
+  margin-top: 1rem;
+}
+
+.admin-success {
+  color: #4ade80;
+  font-size: 0.85rem;
+}
+
+/* ── Tabla ────────────────────────────────────────────────────────────────── */
+.admin-table-wrap {
+  overflow-x: auto;
+  border-radius: 6px;
+  border: 1px solid #222;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+
+.admin-table thead tr {
+  background-color: #111;
+  border-bottom: 1px solid #333;
+}
+
+.admin-table thead th {
+  color: #FFD700;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.72rem;
+  letter-spacing: 0.5px;
+  padding: 0.75rem 1rem;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.admin-table-row {
+  border-bottom: 1px solid #1e1e1e;
+  transition: background-color 0.15s;
+}
+
+.admin-table-row:hover {
+  background-color: #141414;
+}
+
+.admin-table td {
+  padding: 0.65rem 1rem;
+  vertical-align: middle;
+}
+
+.admin-table-img {
+  width: 52px;
+  height: 52px;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 1px solid #333;
+}
+
+.admin-table-name {
+  font-weight: 600;
+  color: #fff;
+  max-width: 200px;
+}
+
+.admin-table-cell {
+  color: #aaa;
+}
+
+/* ── Badges de estado ─────────────────────────────────────────────────────── */
+.admin-status-badge {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  text-transform: uppercase;
+}
+
+.admin-status-badge.active {
+  background-color: #14532d;
+  color: #4ade80;
+  border: 1px solid #166534;
+}
+
+.admin-status-badge.inactive {
+  background-color: #1c1917;
+  color: #78716c;
+  border: 1px solid #292524;
+}
+
+/* ── Botón editar ─────────────────────────────────────────────────────────── */
+.admin-edit-btn {
+  background: transparent;
+  border: 1px solid #444;
+  color: #ccc;
+  font-size: 0.78rem;
+  padding: 4px 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+  white-space: nowrap;
+}
+
+.admin-edit-btn:hover {
+  border-color: #FFD700;
+  color: #FFD700;
+}
+
+.admin-delete-btn {
+  background: transparent;
+  border: 1px solid #3f1111;
+  color: #f87171;
+  font-size: 0.78rem;
+  padding: 4px 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s, border-color 0.2s;
+  white-space: nowrap;
+}
+
+.admin-delete-btn:hover {
+  background-color: #3f1111;
+  border-color: #ef4444;
+}
+
+/* ── Formulario de edición ────────────────────────────────────────────────── */
+.admin-form-page {
+  max-width: 780px;
+}
+
+.admin-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: transparent;
+  border: none;
+  color: #888;
+  font-size: 0.82rem;
+  cursor: pointer;
+  margin-bottom: 1.5rem;
+  padding: 0;
+  transition: color 0.2s;
+}
+
+.admin-back-btn:hover {
+  color: #FFD700;
+}
+
+.admin-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+}
+
+.admin-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.admin-form-group.full-width {
+  grid-column: 1 / -1;
+}
+
+.admin-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #888;
+  font-weight: 600;
+}
+
+.admin-input,
+.admin-select,
+.admin-textarea {
+  background-color: #111;
+  border: 1px solid #333;
+  color: #e0e0e0;
+  padding: 0.5rem 0.75rem;
+  border-radius: 4px;
+  font-size: 0.88rem;
+  transition: border-color 0.2s;
+  width: 100%;
+}
+
+.admin-input:focus,
+.admin-select:focus,
+.admin-textarea:focus {
+  outline: none;
+  border-color: #FFD700;
+}
+
+.admin-textarea {
+  resize: vertical;
+  min-height: 90px;
+}
+
+.admin-select option {
+  background-color: #111;
+}
+
+/* ── Toggle activo ────────────────────────────────────────────────────────── */
+.admin-toggle-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 0.25rem;
+}
+
+.admin-toggle {
+  width: 42px;
+  height: 22px;
+  appearance: none;
+  background-color: #333;
+  border-radius: 999px;
+  position: relative;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  flex-shrink: 0;
+}
+
+.admin-toggle:checked {
+  background-color: #FFD700;
+}
+
+.admin-toggle::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 16px;
+  height: 16px;
+  background: #fff;
+  border-radius: 50%;
+  transition: transform 0.2s;
+}
+
+.admin-toggle:checked::after {
+  transform: translateX(20px);
+}
+
+.admin-toggle-label {
+  font-size: 0.85rem;
+  color: #ccc;
+}
+
+/* ── Sección variantes ────────────────────────────────────────────────────── */
+.admin-section-title {
+  font-family: 'Impact', sans-serif;
+  font-size: 1rem;
+  color: #FFD700;
+  letter-spacing: 1px;
+  margin: 2rem 0 1rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid #222;
+}
+
+.admin-variants-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.admin-variants-table th {
+  color: #888;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid #222;
+}
+
+.admin-variants-table td {
+  padding: 0.4rem 0.5rem;
+  vertical-align: middle;
+}
+
+.admin-variant-input {
+  background-color: #111;
+  border: 1px solid #333;
+  color: #e0e0e0;
+  padding: 0.35rem 0.6rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  width: 100%;
+  transition: border-color 0.2s;
+}
+
+.admin-variant-input:focus {
+  outline: none;
+  border-color: #FFD700;
+}
+
+.admin-delete-variant-btn {
+  background: transparent;
+  border: 1px solid #3f1111;
+  color: #f87171;
+  font-size: 0.75rem;
+  padding: 3px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  white-space: nowrap;
+}
+
+.admin-delete-variant-btn:hover {
+  background-color: #3f1111;
+}
+
+.admin-add-variant-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+}
+
+.admin-add-variant-btn {
+  background: transparent;
+  border: 1px solid #555;
+  color: #ccc;
+  font-size: 0.8rem;
+  padding: 5px 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+  white-space: nowrap;
+}
+
+.admin-add-variant-btn:hover {
+  border-color: #FFD700;
+  color: #FFD700;
+}
+
+/* ── Botón guardar ────────────────────────────────────────────────────────── */
+.admin-save-btn {
+  margin-top: 2rem;
+  background-color: #FFD700;
+  color: #000;
+  border: none;
+  font-family: 'Impact', sans-serif;
+  font-size: 1rem;
+  letter-spacing: 1px;
+  padding: 0.65rem 2.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.admin-save-btn:hover {
+  opacity: 0.85;
+}
+
+.admin-save-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ── Badges de estado de pedido ───────────────────────────────────────────── */
+.admin-status-badge.order-pending {
+  background-color: #2a1f00;
+  color: #F59E0B;
+  border: 1px solid #3d2e00;
+}
+
+.admin-status-badge.order-paid {
+  background-color: #14532d;
+  color: #4ade80;
+  border: 1px solid #166534;
+}
+
+.admin-status-badge.order-shipped {
+  background-color: #1e3a5f;
+  color: #60a5fa;
+  border: 1px solid #1d4ed8;
+}
+
+.admin-status-badge.order-delivered {
+  background-color: #052e16;
+  color: #86efac;
+  border: 1px solid #15803d;
+}
+
+.admin-status-badge.order-cancelled {
+  background-color: #450a0a;
+  color: #f87171;
+  border: 1px solid #7f1d1d;
+}
+
+/* ── Indicador marca inactiva ─────────────────────────────────────────────── */
+.admin-table-row.brand-inactive {
+  box-shadow: inset 3px 0 0 #F59E0B;
+}
+
+.admin-brand-off-badge {
+  display: block;
+  margin-top: 4px;
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  color: #F59E0B;
+  border: 1px solid rgba(245, 158, 11, 0.25);
+  border-radius: 999px;
+  padding: 1px 7px;
+  white-space: nowrap;
+}

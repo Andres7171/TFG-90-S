@@ -1,4 +1,4 @@
-import { supabase } from '../lib/supabase-client'
+import { supabasePublic as supabase } from '../lib/supabase-public'
 
 export async function getCollaborators() {
   const { data, error } = await supabase

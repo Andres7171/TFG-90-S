@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase-client'
+import { supabaseAdmin } from '../lib/supabase-admin'
 import { loginUser, logoutUser, registerUser, getUserProfile } from '../services/authService'
 
 const AuthContext = createContext({})
@@ -20,22 +21,32 @@ export function AuthProvider({ children }) {
   }
 
   useEffect(() => {
-    supabase.auth.getSession().then(async ({ data: { session } }) => {
-      const authUser = session?.user ?? null
-      setUser(authUser)
-      await loadProfile(authUser)
-      setLoading(false)
-    })
+    const fallback = setTimeout(() => setLoading(false), 4000)
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (_event, session) => {
+      async (event, session) => {
         const authUser = session?.user ?? null
         setUser(authUser)
         await loadProfile(authUser)
+
+        if (session) {
+          supabaseAdmin.auth.setSession({
+            access_token:  session.access_token,
+            refresh_token: session.refresh_token,
+          }).catch(() => {})
+        }
+
+        if (event === 'INITIAL_SESSION') {
+          clearTimeout(fallback)
+          setLoading(false)
+        }
       }
     )
 
-    return () => subscription.unsubscribe()
+    return () => {
+      subscription.unsubscribe()
+      clearTimeout(fallback)
+    }
   }, [])
 
   const login = (email, password) => loginUser({ email, password })
@@ -45,7 +56,6 @@ export function AuthProvider({ children }) {
 
   const logout = () => logoutUser()
 
-  // isAdmin usa la columna rol de public.user, no app_metadata
   const isAdmin = profile?.rol === 'admin'
 
   return (

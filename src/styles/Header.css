@@ -52,6 +52,24 @@
   background-color: #e2e8f0;
 }
 
+.admin-panel-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background-color: #FFD700;
+  border: none;
+  color: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.admin-panel-btn:hover {
+  opacity: 0.8;
+}
+
 .cart-badge {
   position: absolute;
   top: -4px;

@@ -1,8 +1,10 @@
-import { ShoppingCart, User } from 'lucide-react'
+import { ShoppingCart, User, Settings } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { useCart } from '../context/CartContext'
+import { ProfileSidebar } from './ProfileSidebar'
+import { useState } from 'react'
 import '../styles/Header.css'
 
 const NAV_LINKS = [
@@ -15,16 +17,24 @@ const NAV_LINKS = [
 ]
 
 export function Header() {
-  const { user } = useAuth()
+  const { user, isAdmin } = useAuth()
   const { totalItems, setCartOpen } = useCart()
   const navigate = useNavigate()
+  const [profileOpen, setProfileOpen] = useState(false)
 
   const handleCartClick = () => {
     if (!user) { navigate('/login'); return }
     setCartOpen(true)
   }
 
+  const handleUserClick = () => {
+    if (!user) { navigate('/login'); return }
+    setProfileOpen(true)
+  }
+
   return (
+    <>
+    <ProfileSidebar open={profileOpen} onClose={() => setProfileOpen(false)} />
     <div className="contenedor">
       <motion.header
         initial={{ y: -50, opacity: 0 }}
@@ -56,13 +66,18 @@ export function Header() {
             </div>
 
             <div className="col-3 d-flex align-items-center justify-content-end gap-2">
+              {isAdmin && (
+                <button className="admin-panel-btn" onClick={() => navigate('/admin')} title="Panel administrador">
+                  <Settings size={17} />
+                </button>
+              )}
               <button className="cart-btn-round" onClick={handleCartClick}>
                 <ShoppingCart size={20} />
                 {totalItems > 0 && (
                   <span className="cart-badge">{totalItems}</span>
                 )}
               </button>
-              <button className="user-btn-round" onClick={() => navigate(user ? '/perfil' : '/login')}>
+              <button className="user-btn-round" onClick={handleUserClick}>
                 <User size={20} />
               </button>
             </div>
@@ -71,5 +86,6 @@ export function Header() {
         </div>
       </motion.header>
     </div>
+    </>
   )
 }
