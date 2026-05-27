@@ -4,13 +4,13 @@ import { useAuth } from '../context/AuthContext'
 import '../styles/Auth.css'
 
 export function Register() {
-  const { register } = useAuth()
-  const navigate     = useNavigate()
+  const { register, loginWithGoogle } = useAuth()
+  const navigate = useNavigate()
 
   const [form, setForm] = useState({
     name: '', surname: '', email: '', password: '', confirm: '',
   })
-  const [error, setError]     = useState(null)
+  const [error, setError] = useState(null)
   const [loading, setLoading] = useState(false)
 
   const handleChange = (e) =>
@@ -107,6 +107,18 @@ export function Register() {
             {loading ? 'Creando cuenta...' : 'REGISTRARSE'}
           </button>
         </form>
+
+        <div className="auth-divider">
+          <span>o</span>
+        </div>
+ 
+        <button
+          type="button"
+          className="btn auth-google-btn w-100"
+          onClick={loginWithGoogle}
+        >
+          CONTINUAR CON GOOGLE
+        </button>
 
         <p className="text-center mt-3 auth-switch">
           ¿Ya tienes cuenta? <Link to="/login">Inicia sesión</Link>

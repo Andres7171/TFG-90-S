@@ -6,7 +6,7 @@ import { loginUser, logoutUser, registerUser, getUserProfile } from '../services
 const AuthContext = createContext({})
 
 export function AuthProvider({ children }) {
-  const [user, setUser]       = useState(null)
+  const [user, setUser] = useState(null)
   const [profile, setProfile] = useState(null)
   const [loading, setLoading] = useState(true)
 
@@ -51,15 +51,24 @@ export function AuthProvider({ children }) {
 
   const login = (email, password) => loginUser({ email, password })
 
+  const loginWithGoogle = async () => {
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {redirectTo: window.location.origin}
+    })
+    if (error) throw error
+  }
+
   const register = (email, password, name, surname) =>
     registerUser({ email, password, name, surname })
 
   const logout = () => logoutUser()
 
   const isAdmin = profile?.rol === 'admin'
+  const refreshProfile = () => loadProfile(user)
 
   return (
-    <AuthContext.Provider value={{ user, profile, loading, login, register, logout, isAdmin }}>
+    <AuthContext.Provider value={{ user, profile, loading, login, loginWithGoogle, register, logout, isAdmin, refreshProfile }}>
       {!loading && children}
     </AuthContext.Provider>
   )
