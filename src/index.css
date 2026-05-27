@@ -23,3 +23,61 @@ body {
   font-family: var(--font-body);
   min-height: 100vh;
 }
+
+/* Filtros compartidos */
+.store-filters {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.filter-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.filter-label {
+  font-family: var(--font-display);
+  color: var(--color-accent);
+  font-size: 0.78rem;
+  letter-spacing: 0.5px;
+  min-width: 75px;
+}
+
+.filter-btn {
+  background: none;
+  border: 1px solid var(--color-border-light);
+  color: #888;
+  font-size: 0.78rem;
+  padding: 0.3rem 0.75rem;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.filter-btn:hover {
+  border-color: #888;
+  color: #ccc;
+}
+
+.filter-btn.active {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.filter-reset {
+  background: none;
+  border: 1px solid #444;
+  color: #666;
+  font-size: 0.75rem;
+  padding: 0.3rem 0.75rem;
+  cursor: pointer;
+  margin-left: auto;
+}
+
+.filter-reset:hover {
+  border-color: #888;
+  color: #ccc;
+}

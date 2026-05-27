@@ -1,14 +1,20 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { getActiveProducts } from '../services/productService'
 import '../styles/Home.css'
 
+const CATEGORIES = ['Todos', 'camisetas', 'pantalones', 'vestidos', 'accesorios', 'calzado']
+const DECADES = ['Todos', '80', '90']
+
 export function Home() {
   const [products, setProducts] = useState([])
-  const [search, setSearch]     = useState('')
-  const [loading, setLoading]   = useState(true)
-  const [error, setError]       = useState(null)
+  const [search, setSearch] = useState('')
+  const [category, setCategory] = useState('Todos')
+  const [decade, setDecade] = useState('Todos')
+  const [brand, setBrand] = useState('Todos')
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -18,9 +24,30 @@ export function Home() {
       .finally(() => setLoading(false))
   }, [])
 
-  const filtered = products.filter((p) =>
-    p.name.toLowerCase().includes(search.toLowerCase())
-  )
+  const brands = useMemo(() => {
+    const unique = [...new Set(products.map(p => p.brand?.name).filter(Boolean))].sort()
+    return ['Todos', ...unique]
+  }, [products])
+
+  const filtered = useMemo(() => {
+    return products.filter(p => {
+      if (search && !p.name.toLowerCase().includes(search.toLowerCase())) return false
+      if (category !== 'Todos' && p.category !== category) return false
+      if (decade !== 'Todos' && p.decade !== parseInt(decade)) return false
+      if (brand !== 'Todos' && p.brand?.name !== brand) return false
+      return true
+    })
+  }, [products, search, category, decade, brand])
+
+  const hasActiveFilters =
+    search !== '' || category !== 'Todos' || decade !== 'Todos' || brand !== 'Todos'
+
+  const resetFilters = () => {
+    setSearch('')
+    setCategory('Todos')
+    setDecade('Todos')
+    setBrand('Todos')
+  }
 
   if (loading)
     return (
@@ -40,6 +67,8 @@ export function Home() {
     <div className="home-page">
       <div className="container py-4">
 
+        <h2 className="home-title mb-4">PRODUCTOS</h2>
+
         <div className="mb-4">
           <input
             type="text"
@@ -50,10 +79,63 @@ export function Home() {
           />
         </div>
 
-        <h2 className="home-title mb-4">PRODUCTOS</h2>
+        <div className="store-filters">
+          <div className="filter-group">
+            <span className="filter-label">CATEGORÍA</span>
+            {CATEGORIES.map(c => (
+              <button
+                key={c}
+                className={`filter-btn ${category === c ? 'active' : ''}`}
+                onClick={() => setCategory(c)}
+              >
+                {c === 'Todos' ? 'Todas' : c.charAt(0).toUpperCase() + c.slice(1)}
+              </button>
+            ))}
+          </div>
+
+          <div className="filter-group">
+            <span className="filter-label">DÉCADA</span>
+            {DECADES.map(d => (
+              <button
+                key={d}
+                className={`filter-btn ${decade === d ? 'active' : ''}`}
+                onClick={() => setDecade(d)}
+              >
+                {d === 'Todos' ? 'Todas' : `Años ${d}`}
+              </button>
+            ))}
+          </div>
+
+          <div className="filter-group">
+            <span className="filter-label">MARCA</span>
+            {brands.map(b => (
+              <button
+                key={b}
+                className={`filter-btn ${brand === b ? 'active' : ''}`}
+                onClick={() => setBrand(b)}
+              >
+                {b === 'Todos' ? 'Todas' : b}
+              </button>
+            ))}
+          </div>
+
+          {hasActiveFilters && (
+            <button className="filter-reset" onClick={resetFilters}>
+              Limpiar filtros
+            </button>
+          )}
+        </div>
+
+        <p className="text-secondary mb-3" style={{ fontSize: '0.82rem' }}>
+          {filtered.length} de {products.length} productos
+        </p>
 
         {filtered.length === 0 && (
-          <p className="text-secondary">No se encontraron productos.</p>
+          <p className="text-secondary">
+            {hasActiveFilters
+              ? 'No hay productos que coincidan con los filtros.'
+              : 'No se encontraron productos.'}
+          </p>
         )}
 
         <div className="row g-3">
