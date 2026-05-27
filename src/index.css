@@ -1,0 +1,25 @@
+:root {
+  --color-bg:        #000;
+  --color-bg-card:   #111;
+  --color-bg-input:  #1a1a1a;
+  --color-border:    #222;
+  --color-border-light: #333;
+  --color-text:      #fff;
+  --color-text-muted: #aaa;
+  --color-accent:    #FFD700;
+  --font-display:    Impact, sans-serif;
+  --font-body:       system-ui, sans-serif;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  min-height: 100vh;
+}

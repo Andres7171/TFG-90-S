@@ -1,7 +1,7 @@
 import { createClient } from '@supabase/supabase-js'
 
-const supabaseUrl = 'https://jmcfmlfnfsbnlbvcqksc.supabase.co'
-const supabaseAnonKey = 'sb_publishable_q16BP1lVDIgYLSLgefubew_hSUPFp56'
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
 
 if (!globalThis.__supabase_public__) {
   globalThis.__supabase_public__ = createClient(supabaseUrl, supabaseAnonKey, {
