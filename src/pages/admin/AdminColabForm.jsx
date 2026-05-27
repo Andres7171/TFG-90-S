@@ -1,19 +1,20 @@
 import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { ChevronLeft } from 'lucide-react'
-import { getCollaboratorByIdAdmin, updateCollaborator } from '../../services/adminService'
+import { getCollaboratorByIdAdmin, createCollaborator, updateCollaborator } from '../../services/adminService'
 import { AdminLayout } from './AdminLayout'
 import { toast } from 'sonner'
 
 const TYPES = ['Freelancer', 'Empresa']
 
-export function AdminColabEdit() {
+export function AdminColabForm() {
   const { id } = useParams()
+  const isEditing = !!id
   const navigate = useNavigate()
 
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(isEditing)
   const [saving, setSaving] = useState(false)
-  const [error, setError]   = useState(null)
+  const [error, setError] = useState(null)
 
   const [fields, setFields] = useState({
     name: '', type: 'Freelancer', description: '',
@@ -21,22 +22,23 @@ export function AdminColabEdit() {
   })
 
   useEffect(() => {
+    if (!isEditing) return
     getCollaboratorByIdAdmin(id)
       .then((data) => {
         setFields({
-          name:        data.name        ?? '',
-          type:        data.type        ?? 'Freelancer',
+          name: data.name ?? '',
+          type: data.type ?? 'Freelancer',
           description: data.description ?? '',
-          email:       data.email       ?? '',
-          contact:     data.contact     ?? '',
-          web_url:     data.web_url     ?? '',
-          image_url:   data.image_url   ?? '',
-          active:      data.active      ?? true,
+          email: data.email ?? '',
+          contact: data.contact ?? '',
+          web_url: data.web_url ?? '',
+          image_url: data.image_url ?? '',
+          active: data.active ?? true,
         })
       })
       .catch((err) => setError(err.message))
       .finally(() => setLoading(false))
-  }, [id])
+  }, [id, isEditing])
 
   const handleField = (e) => {
     const { name, value, type, checked } = e.target
@@ -44,20 +46,30 @@ export function AdminColabEdit() {
   }
 
   const handleSave = async () => {
+    if (!fields.name.trim()) { setError('El nombre es obligatorio.'); return }
+
     setSaving(true)
     setError(null)
     try {
-      await updateCollaborator(id, {
-        name:        fields.name,
-        type:        fields.type,
-        description: fields.description,
-        email:       fields.email       || null,
-        contact:     fields.contact     || null,
-        web_url:     fields.web_url     || null,
-        image_url:   fields.image_url   || null,
-        active:      fields.active,
-      })
-      toast.success('Colaborador guardado correctamente')
+      const payload = {
+        name: fields.name.trim(),
+        type: fields.type,
+        description: fields.description || null,
+        email: fields.email       || null,
+        contact: fields.contact     || null,
+        web_url: fields.web_url     || null,
+        image_url: fields.image_url   || null,
+        active: fields.active,
+      }
+
+      if (isEditing) {
+        await updateCollaborator(id, payload)
+        toast.success('Colaborador guardado correctamente')
+      } else {
+        const newId = await createCollaborator(payload)
+        toast.success('Colaborador creado correctamente')
+        navigate(`/admin/colaboradores/${newId}`, { replace: true })
+      }
     } catch (err) {
       setError(err.message)
     } finally {
@@ -80,7 +92,7 @@ export function AdminColabEdit() {
         </button>
 
         <h2 className="admin-page-title" style={{ marginBottom: '1.75rem' }}>
-          Editar Colaborador
+          {isEditing ? 'Editar Colaborador' : 'Nuevo Colaborador'}
         </h2>
 
         {error && <p className="admin-error" style={{ marginBottom: '1rem' }}>{error}</p>}
@@ -88,7 +100,7 @@ export function AdminColabEdit() {
         <div className="admin-form-grid">
 
           <div className="admin-form-group">
-            <label className="admin-label">Nombre</label>
+            <label className="admin-label">Nombre {!isEditing && '*'}</label>
             <input className="admin-input" name="name" value={fields.name} onChange={handleField} />
           </div>
 
@@ -103,39 +115,39 @@ export function AdminColabEdit() {
 
           <div className="admin-form-group">
             <label className="admin-label">Email</label>
-            <input className="admin-input" type="email" name="email" value={fields.email} onChange={handleField} placeholder="contacto@ejemplo.com" />
+            <input className="admin-input" type="email" name="email" value={fields.email}
+              onChange={handleField} placeholder="contacto@ejemplo.com" />
           </div>
 
           <div className="admin-form-group">
             <label className="admin-label">Contacto (teléfono u otro)</label>
-            <input className="admin-input" name="contact" value={fields.contact} onChange={handleField} placeholder="+34 600 000 000" />
+            <input className="admin-input" name="contact" value={fields.contact}
+              onChange={handleField} placeholder="+34 600 000 000" />
           </div>
 
           <div className="admin-form-group">
             <label className="admin-label">URL web</label>
-            <input className="admin-input" name="web_url" value={fields.web_url} onChange={handleField} placeholder="https://..." />
+            <input className="admin-input" name="web_url" value={fields.web_url}
+              onChange={handleField} placeholder="https://..." />
           </div>
 
           <div className="admin-form-group">
             <label className="admin-label">URL de imagen</label>
-            <input className="admin-input" name="image_url" value={fields.image_url} onChange={handleField} placeholder="https://..." />
+            <input className="admin-input" name="image_url" value={fields.image_url}
+              onChange={handleField} placeholder="https://..." />
           </div>
 
           <div className="admin-form-group full-width">
             <label className="admin-label">Descripción</label>
-            <textarea className="admin-textarea" name="description" value={fields.description} onChange={handleField} />
+            <textarea className="admin-textarea" name="description" value={fields.description}
+              onChange={handleField} />
           </div>
 
           <div className="admin-form-group">
             <label className="admin-label">Estado</label>
             <div className="admin-toggle-row">
-              <input
-                type="checkbox"
-                className="admin-toggle"
-                name="active"
-                checked={fields.active}
-                onChange={handleField}
-              />
+              <input type="checkbox" className="admin-toggle" name="active"
+                checked={fields.active} onChange={handleField} />
               <span className="admin-toggle-label">{fields.active ? 'Activo' : 'Inactivo'}</span>
             </div>
           </div>
@@ -143,7 +155,7 @@ export function AdminColabEdit() {
         </div>
 
         <button className="admin-save-btn" onClick={handleSave} disabled={saving}>
-          {saving ? 'GUARDANDO...' : 'GUARDAR CAMBIOS'}
+          {saving ? 'GUARDANDO...' : isEditing ? 'GUARDAR CAMBIOS' : 'CREAR COLABORADOR'}
         </button>
       </div>
     </AdminLayout>

@@ -1,22 +1,44 @@
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import { useParams, useNavigate } from 'react-router-dom'
 import { ChevronLeft } from 'lucide-react'
-import { createCollaborator } from '../../services/adminService'
+import { getCollaboratorByIdAdmin, createCollaborator, updateCollaborator } from '../../services/adminService'
 import { AdminLayout } from './AdminLayout'
 import { toast } from 'sonner'
 
 const TYPES = ['Propia', 'Freelancer', 'Empresa']
 
-export function AdminMarcaCreate() {
+export function AdminMarcaForm() {
+  const { id } = useParams()
+  const isEditing = !!id
   const navigate = useNavigate()
 
+  const [loading, setLoading] = useState(isEditing)
   const [saving, setSaving] = useState(false)
-  const [error, setError]   = useState(null)
+  const [error, setError] = useState(null)
 
   const [fields, setFields] = useState({
     name: '', type: 'Propia', description: '',
     email: '', contact: '', web_url: '', image_url: '', active: true,
   })
+
+  useEffect(() => {
+    if (!isEditing) return
+    getCollaboratorByIdAdmin(id)
+      .then((data) => {
+        setFields({
+          name: data.name ?? '',
+          type: data.type ?? 'Propia',
+          description: data.description ?? '',
+          email: data.email ?? '',
+          contact: data.contact ?? '',
+          web_url: data.web_url ?? '',
+          image_url: data.image_url ?? '',
+          active: data.active ?? true,
+        })
+      })
+      .catch((err) => setError(err.message))
+      .finally(() => setLoading(false))
+  }, [id, isEditing])
 
   const handleField = (e) => {
     const { name, value, type, checked } = e.target
@@ -29,23 +51,38 @@ export function AdminMarcaCreate() {
     setSaving(true)
     setError(null)
     try {
-      const newId = await createCollaborator({
-        name:        fields.name.trim(),
-        type:        fields.type,
+      const payload = {
+        name: fields.name.trim(),
+        type: fields.type,
         description: fields.description || null,
-        email:       fields.email       || null,
-        contact:     fields.contact     || null,
-        web_url:     fields.web_url     || null,
-        image_url:   fields.image_url   || null,
-        active:      fields.active,
-      })
-      toast.success('Marca creada correctamente')
-      navigate(`/admin/marcas/${newId}`, { replace: true })
+        email: fields.email || null,
+        contact: fields.contact || null,
+        web_url: fields.web_url || null,
+        image_url: fields.image_url || null,
+        active: fields.active,
+      }
+
+      if (isEditing) {
+        await updateCollaborator(id, payload)
+        toast.success('Marca guardada correctamente')
+      } else {
+        const newId = await createCollaborator(payload)
+        toast.success('Marca creada correctamente')
+        navigate(`/admin/marcas/${newId}`, { replace: true })
+      }
     } catch (err) {
       setError(err.message)
+    } finally {
       setSaving(false)
     }
   }
+
+  if (loading)
+    return (
+      <AdminLayout>
+        <p className="admin-loading">Cargando marca...</p>
+      </AdminLayout>
+    )
 
   return (
     <AdminLayout>
@@ -55,7 +92,7 @@ export function AdminMarcaCreate() {
         </button>
 
         <h2 className="admin-page-title" style={{ marginBottom: '1.75rem' }}>
-          Nueva Marca
+          {isEditing ? 'Editar Marca' : 'Nueva Marca'}
         </h2>
 
         {error && <p className="admin-error" style={{ marginBottom: '1rem' }}>{error}</p>}
@@ -63,7 +100,7 @@ export function AdminMarcaCreate() {
         <div className="admin-form-grid">
 
           <div className="admin-form-group">
-            <label className="admin-label">Nombre *</label>
+            <label className="admin-label">Nombre {!isEditing && '*'}</label>
             <input className="admin-input" name="name" value={fields.name} onChange={handleField} />
           </div>
 
@@ -118,7 +155,7 @@ export function AdminMarcaCreate() {
         </div>
 
         <button className="admin-save-btn" onClick={handleSave} disabled={saving}>
-          {saving ? 'GUARDANDO...' : 'CREAR MARCA'}
+          {saving ? 'GUARDANDO...' : isEditing ? 'GUARDAR CAMBIOS' : 'CREAR MARCA'}
         </button>
       </div>
     </AdminLayout>
