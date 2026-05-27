@@ -1,15 +1,15 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { getAllCollaborators, deleteBrand } from '../../services/adminService'
+import { getAllCollaborators, deleteBrand, toggleBrandActive } from '../../services/adminService'
 import { AdminLayout } from './AdminLayout'
 import { toast } from 'sonner'
 import Swal from 'sweetalert2'
 
 export function AdminColaboradores() {
-  const [brands, setBrands]   = useState([])
-  const [search, setSearch]   = useState('')
+  const [brands, setBrands] = useState([])
+  const [search, setSearch] = useState('')
   const [loading, setLoading] = useState(true)
-  const [error, setError]     = useState(null)
+  const [error, setError] = useState(null)
   const navigate = useNavigate()
 
   const handleDelete = async (id, name) => {
@@ -40,6 +40,33 @@ export function AdminColaboradores() {
       .catch((err) => setError(err.message))
       .finally(() => setLoading(false))
   }, [])
+
+  const handleToggleActive = async (brand) => {
+    const action = brand.active ? 'desactivar' : 'activar'
+    const result = await Swal.fire({
+      title: `¿${action.charAt(0).toUpperCase() + action.slice(1)} "${brand.name}"?`,
+      text: brand.active
+        ? 'Sus productos dejarán de ser visibles en el catálogo.'
+        : 'Sus productos volverán a ser visibles en el catálogo.',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: `Sí, ${action}`,
+      cancelButtonText: 'Cancelar',
+      confirmButtonColor: brand.active ? '#ef4444' : '#22c55e',
+      background: '#111',
+      color: '#e0e0e0',
+    })
+    if (!result.isConfirmed) return
+    try {
+      await toggleBrandActive(brand.id, brand.active)
+      setBrands((prev) =>
+        prev.map(b => b.id === brand.id ? { ...b, active: !b.active } : b)
+      )
+      toast.success(`Colaborador ${brand.active ? 'desactivado' : 'activado'}.`)
+    } catch (err) {
+      toast.error(err.message)
+    }
+  }
 
   const filtered = brands.filter((b) =>
     b.name.toLowerCase().includes(search.toLowerCase()) ||
@@ -103,9 +130,12 @@ export function AdminColaboradores() {
                     }
                   </td>
                   <td>
-                    <span className={`admin-status-badge ${b.active ? 'active' : 'inactive'}`}>
+                    <button
+                      className={`admin-status-toggle ${b.active ? 'active' : 'inactive'}`}
+                      onClick={() => handleToggleActive(b)}
+                    >
                       {b.active ? 'Activo' : 'Inactivo'}
-                    </span>
+                    </button>
                   </td>
                   <td>
                     <div className="d-flex gap-2">

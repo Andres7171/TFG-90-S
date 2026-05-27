@@ -16,6 +16,19 @@
   margin-bottom: 1.5rem;
 }
 
+.auth-back-link {
+  display: inline-block;
+  color: #666;
+  font-size: 0.8rem;
+  text-decoration: none;
+  margin-bottom: 1rem;
+  transition: color 0.2s;
+}
+
+.auth-back-link:hover {
+  color: yellow;
+}
+
 .auth-card .form-label {
   color: #aaa;
   font-size: 0.8rem;

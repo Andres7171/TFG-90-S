@@ -61,6 +61,22 @@
   color: #aaa;
 }
 
+.admin-back-store-btn {
+  background: transparent;
+  border: 1px solid #333;
+  color: #888;
+  font-size: 0.75rem;
+  padding: 5px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.admin-back-store-btn:hover {
+  border-color: #FFD700;
+  color: #FFD700;
+}
+
 .admin-logout-btn {
   display: flex;
   align-items: center;
@@ -246,7 +262,35 @@
   border: 1px solid #292524;
 }
 
-/* ── Botón editar ─────────────────────────────────────────────────────────── */
+.admin-status-toggle {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  padding: 2px 10px;
+  border-radius: 999px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.admin-status-toggle:hover {
+  opacity: 0.75;
+}
+
+.admin-status-toggle.active {
+  background-color: #14532d;
+  color: #4ade80;
+  border: 1px solid #166534;
+}
+
+.admin-status-toggle.inactive {
+  background-color: #1c1917;
+  color: #78716c;
+  border: 1px solid #292524;
+}
+
+/* Botón editar */
 .admin-edit-btn {
   background: transparent;
   border: 1px solid #444;
@@ -281,7 +325,7 @@
   border-color: #ef4444;
 }
 
-/* ── Formulario de edición ────────────────────────────────────────────────── */
+/* Formulario de edición */
 .admin-form-page {
   max-width: 780px;
 }
@@ -357,7 +401,7 @@
   background-color: #111;
 }
 
-/* ── Toggle activo ────────────────────────────────────────────────────────── */
+/* Toggle activo */
 .admin-toggle-row {
   display: flex;
   align-items: center;
@@ -402,7 +446,7 @@
   color: #ccc;
 }
 
-/* ── Sección variantes ────────────────────────────────────────────────────── */
+/* Sección variantes */
 .admin-section-title {
   font-family: 'Impact', sans-serif;
   font-size: 1rem;
@@ -492,7 +536,7 @@
   color: #FFD700;
 }
 
-/* ── Botón guardar ────────────────────────────────────────────────────────── */
+/* Botón guardar */
 .admin-save-btn {
   margin-top: 2rem;
   background-color: #FFD700;
@@ -516,7 +560,7 @@
   cursor: not-allowed;
 }
 
-/* ── Badges de estado de pedido ───────────────────────────────────────────── */
+/*  Badges de estado de pedido  */
 .admin-status-badge.order-pending {
   background-color: #2a1f00;
   color: #F59E0B;
@@ -547,7 +591,7 @@
   border: 1px solid #7f1d1d;
 }
 
-/* ── Indicador marca inactiva ─────────────────────────────────────────────── */
+/* Indicador marca inactiva */
 .admin-table-row.brand-inactive {
   box-shadow: inset 3px 0 0 #F59E0B;
 }

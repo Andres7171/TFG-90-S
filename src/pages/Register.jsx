@@ -39,6 +39,7 @@ export function Register() {
   return (
     <div className="auth-wrapper d-flex align-items-center justify-content-center min-vh-100">
       <div className="auth-card p-4">
+        <Link to="/" className="auth-back-link">← Volver a la tienda</Link>
         <h2 className="auth-title">CREAR CUENTA</h2>
 
         {error && <div className="alert alert-danger py-2">{error}</div>}

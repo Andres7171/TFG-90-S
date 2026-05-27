@@ -160,6 +160,22 @@ export async function deleteProduct(id) {
   if (error) throw error
 }
 
+export async function toggleProductActive(id, currentActive) {
+  const { error } = await supabaseAdmin
+    .from('product')
+    .update({ active: !currentActive })
+    .eq('id', id)
+  if (error) throw error
+}
+
+export async function toggleBrandActive(id, currentActive) {
+  const { error } = await supabaseAdmin
+    .from('brand')
+    .update({ active: !currentActive })
+    .eq('id', id)
+  if (error) throw error
+}
+
 export async function createCollaborator(fields) {
   const { data, error } = await supabase
     .from('brand')
