@@ -38,3 +38,11 @@ export async function getUserProfile(userId) {
   if (error) throw error
   return data
 }
+
+export async function updateUserProfile(userId, fields) {
+  const { error } = await supabase
+    .from("profile")
+    .update(fields)
+    .eq("id", userId)
+  if (error) throw error
+}

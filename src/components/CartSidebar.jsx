@@ -2,18 +2,24 @@ import { useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { X } from 'lucide-react'
 import { useCart } from '../context/CartContext'
+import { useAuth } from '../context/AuthContext'
 import '../styles/Cart.css'
 
 export function CartSidebar() {
   const { items, cartOpen, setCartOpen, removeItem, updateQty, checkout, totalPrice } = useCart()
+  const { profile } = useAuth()
   const [address, setAddress]   = useState('')
   const [checkingOut, setCheckingOut] = useState(false)
   const [showAddress, setShowAddress] = useState(false)
-  const [success, setSuccess]   = useState(false)
-  const [error, setError]       = useState(null)
+  const [success, setSuccess] = useState(false)
+  const [error, setError] = useState(null)
 
   const handleCheckout = async () => {
-    if (!showAddress) { setShowAddress(true); return }
+    if (!showAddress) {
+      if (!address && profile?.address) setAddress(profile.address)
+      setShowAddress(true)
+      return
+    }
     if (!address.trim()) { setError('Introduce una dirección de envío'); return }
     setCheckingOut(true)
     setError(null)

@@ -1,17 +1,67 @@
 import { useState, useEffect } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import { X, ChevronDown, MessageCircle, User } from 'lucide-react'
+import { X, ChevronDown, MessageCircle, User, Pencil } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { getMyOrders } from '../services/orderService'
+import { updateUserProfile } from '../services/authService'
+import { toast } from 'sonner'
 import '../styles/ProfileSidebar.css'
 
 export function ProfileSidebar({ open, onClose }) {
-  const { user, profile, logout } = useAuth()
+  const { user, profile, logout, refreshProfile } = useAuth()
   const navigate = useNavigate()
-  const [orders, setOrders]         = useState([])
+  const [orders, setOrders] = useState([])
   const [loadingOrders, setLoadingOrders] = useState(false)
   const [expandedId, setExpandedId] = useState(null)
+
+  // Edición de perfil
+  const [editing, setEditing] = useState(false)
+  const [saving, setSaving] = useState(false)
+  const [editFields, setEditFields] = useState({ name: '', surname: '', address: '' })
+
+  useEffect(() => {
+    if (!open || !user) return
+    setLoadingOrders(true)
+    getMyOrders(user.id)
+      .then(setOrders)
+      .catch(() => setOrders([]))
+      .finally(() => setLoadingOrders(false))
+  }, [open, user])
+
+  const openEdit = () => {
+    setEditFields({
+      name: profile?.name || '',
+      surname: profile?.surname || '',
+      address: profile?.address || '',
+    })
+    setEditing(true)
+  }
+
+  const cancelEdit = () => setEditing(false)
+
+  const handleEditChange = (e) =>
+    setEditFields({ ...editFields, [e.target.name]: e.target.value })
+
+  const handleSave = async () => {
+    if (!editFields.name.trim()) { toast.error('El nombre es obligatorio'); return }
+    setSaving(true)
+    try {
+      await updateUserProfile(user.id, {
+        name: editFields.name.trim(),
+        surname: editFields.surname.trim() || null,
+        address: editFields.address.trim() || null,
+      })
+      await refreshProfile()
+      setEditing(false)
+      toast.success('Perfil actualizado')
+    } catch (err) {
+      console.error('Error perfil:', err)
+      toast.error('Error al actualizar el perfil')
+    } finally {
+      setSaving(false)
+    }
+  }
 
   useEffect(() => {
     if (!open || !user) return
@@ -73,10 +123,68 @@ export function ProfileSidebar({ open, onClose }) {
               <div className="profile-avatar">
                 <User size={30} color="#000" />
               </div>
-              <p className="profile-name">{displayName}</p>
-              <p className="profile-email">{user?.email}</p>
-              {memberSince && (
-                <p className="profile-since">Miembro desde {memberSince}</p>
+
+              {editing ? (
+                <div className="profile-edit-form">
+                  <div className="profile-edit-field">
+                    <label className="profile-edit-label">Nombre *</label>
+                    <input
+                      className="profile-edit-input"
+                      name="name"
+                      value={editFields.name}
+                      onChange={handleEditChange}
+                    />
+                  </div>
+                  <div className="profile-edit-field">
+                    <label className="profile-edit-label">Apellidos</label>
+                    <input
+                      className="profile-edit-input"
+                      name="surname"
+                      value={editFields.surname}
+                      onChange={handleEditChange}
+                    />
+                  </div>
+                  <div className="profile-edit-field">
+                    <label className="profile-edit-label">Dirección de envío</label>
+                    <textarea
+                      className="profile-edit-input profile-edit-textarea"
+                      name="address"
+                      value={editFields.address}
+                      onChange={handleEditChange}
+                      rows={2}
+                      placeholder="Calle, número, piso, ciudad, CP..."
+                    />
+                    <span className="profile-edit-hint">
+                      Se usará por defecto en tus próximos pedidos. Los pedidos ya realizados no se verán afectados.
+                    </span>
+                  </div>
+                  <div className="profile-edit-actions">
+                    <button className="profile-save-btn" onClick={handleSave} disabled={saving}>
+                      {saving ? 'GUARDANDO...' : 'GUARDAR'}
+                    </button>
+                    <button className="profile-cancel-btn" onClick={cancelEdit} disabled={saving}>
+                      CANCELAR
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <>
+                  <div className="profile-info-row">
+                    <div>
+                      <p className="profile-name">{displayName}</p>
+                      <p className="profile-email">{user?.email}</p>
+                      {profile?.address && (
+                        <p className="profile-address">{profile.address}</p>
+                      )}
+                      {memberSince && (
+                        <p className="profile-since">Miembro desde {memberSince}</p>
+                      )}
+                    </div>
+                    <button className="profile-edit-btn" onClick={openEdit} title="Editar perfil">
+                      <Pencil size={16} />
+                    </button>
+                  </div>
+                </>
               )}
 
               <button className="profile-help-btn" onClick={handleHelp}>
