@@ -8,8 +8,8 @@ const CartContext = createContext({})
 
 export function CartProvider({ children }) {
   const { user } = useAuth()
-  const [items, setItems]       = useState([])
-  const [loading, setLoading]   = useState(false)
+  const [items, setItems] = useState([])
+  const [loading, setLoading] = useState(false)
   const [cartOpen, setCartOpen] = useState(false)
 
   const fetchCart = useCallback(async () => {
@@ -43,8 +43,9 @@ export function CartProvider({ children }) {
   }
 
   const checkout = async (shippingAddress) => {
-    await checkoutCart(shippingAddress)
+    const orderId = await checkoutCart(shippingAddress)
     await fetchCart()
+    return orderId
   }
 
   const totalItems = items.reduce((sum, i) => sum + i.quantity, 0)

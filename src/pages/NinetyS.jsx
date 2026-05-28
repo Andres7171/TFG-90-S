@@ -18,7 +18,11 @@ export function NinetyS() {
 
   useEffect(() => {
     getActiveProducts()
-      .then((data) => setProducts(data.filter((p) => p.brand?.type === 'Propia')))
+      .then((data) => {
+        console.log('Todos los productos:', data)
+        console.log('Filtrados Propia:', data.filter((p) => p.brand?.type === 'Propia'))
+        setProducts(data.filter((p) => p.brand?.type === 'Propia'))
+      })
       .catch((err) => setError(err.message))
       .finally(() => setLoading(false))
   }, [])
