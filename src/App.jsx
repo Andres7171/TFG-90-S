@@ -38,13 +38,23 @@ function App() {
   return (
     <>
       <Toaster
-        position="bottom-right"
+        position="top-left"
         theme="dark"
+        richColors
+        expand
         toastOptions={{
-          style: { background: '#111', border: '1px solid #333', color: '#e0e0e0' },
-          success: { style: { borderColor: '#FFD700' } },
+          style: {
+            background: '#111',
+            border: '1px solid #333',
+            color: '#e0e0e0',
+            fontSize: '0.88rem',
+            padding: '12px 16px',
+          },
+          success: { style: { borderColor: '#FFD700', borderWidth: '2px' } },
+          error: { style: { borderColor: '#ef4444', borderWidth: '2px' } },
         }}
       />
+
       <CartSidebar />
       <Routes>
         <Route path="/" element={<Layout><Home /></Layout>} />

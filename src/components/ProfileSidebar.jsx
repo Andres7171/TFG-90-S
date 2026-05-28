@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import { X, ChevronDown, MessageCircle, User, Pencil, Download } from 'lucide-react'
+import { X, ChevronDown, MessageCircle, User, Pencil, Download, CreditCard } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { getMyOrders } from '../services/orderService'
 import { updateUserProfile } from '../services/authService'
 import { downloadReceipt } from '../utils/receipt'
+import { sendReceiptEmail } from '../services/emailService'
+import { PaymentModal } from './PaymentModal'
 import { toast } from 'sonner'
 import '../styles/ProfileSidebar.css'
 
@@ -15,6 +17,9 @@ export function ProfileSidebar({ open, onClose }) {
   const [orders, setOrders] = useState([])
   const [loadingOrders, setLoadingOrders] = useState(false)
   const [expandedId, setExpandedId] = useState(null)
+
+  // Pago de pedidos pendientes
+  const [paymentData, setPaymentData] = useState(null)
 
   // Edición de perfil
   const [editing, setEditing] = useState(false)
@@ -79,6 +84,30 @@ export function ProfileSidebar({ open, onClose }) {
     navigate('/')
   }
 
+  const handlePayPending = (order) => {
+    setPaymentData({ orderId: order.id, total: order.total })
+  }
+
+  const handlePendingPaymentSuccess = async (orderId) => {
+    setPaymentData(null)
+    toast.success('¡Pedido pagado con éxito!')
+
+    // Refrescar lista de pedidos
+    getMyOrders(user.id).then(setOrders).catch(() => {})
+
+    // Enviar recibo por email
+    const updatedOrder = orders.find(o => o.id === orderId)
+    if (updatedOrder) {
+      sendReceiptEmail({ ...updatedOrder, status: 'paid' }, profile, user?.email)
+        .then(() => toast.success('Recibo enviado a tu email'))
+        .catch(() => toast.error('No se pudo enviar el recibo por email'))
+    }
+  }
+
+  const handlePendingPaymentCancel = () => {
+    setPaymentData(null)
+  }
+
   const handleHelp = () => {
     onClose()
     navigate('/atencion-cliente')
@@ -96,14 +125,23 @@ export function ProfileSidebar({ open, onClose }) {
     : user?.email
 
   return (
-    <AnimatePresence>
-      {open && (
-        <>
-          <motion.div
-            className="profile-overlay"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+    <>
+      {paymentData && (
+        <PaymentModal
+          orderId={paymentData.orderId}
+          total={paymentData.total}
+          onSuccess={handlePendingPaymentSuccess}
+          onCancel={handlePendingPaymentCancel}
+        />
+      )}
+      <AnimatePresence>
+        {open && (
+          <>
+            <motion.div
+              className="profile-overlay"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
             onClick={onClose}
           />
           <motion.div
@@ -251,6 +289,17 @@ export function ProfileSidebar({ open, onClose }) {
                             <Download size={13} /> Descargar recibo
                           </button>
                         )}
+                        {order.status === 'pending' && (
+                          <button
+                            className="order-pay-btn"
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              handlePayPending(order)
+                            }}
+                          >
+                            <CreditCard size={13} /> Pagar ahora
+                          </button>
+                        )}
                       </div>
                     )}
                   </div>
@@ -267,5 +316,6 @@ export function ProfileSidebar({ open, onClose }) {
         </>
       )}
     </AnimatePresence>
+    </>
   )
 }
