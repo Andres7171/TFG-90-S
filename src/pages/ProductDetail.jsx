@@ -5,20 +5,20 @@ import { ChevronLeft } from 'lucide-react'
 import { getProductById } from '../services/productService'
 import { useAuth } from '../context/AuthContext'
 import { useCart } from '../context/CartContext'
+import { toast } from 'sonner'
 import '../styles/ProductDetail.css'
 
 export function ProductDetail() {
   const { id } = useParams()
   const navigate = useNavigate()
   const { user } = useAuth()
-  const { addItem } = useCart()
+  const { addItem, items } = useCart()
 
-  const [product, setProduct]       = useState(null)
-  const [loading, setLoading]       = useState(true)
-  const [error, setError]           = useState(null)
+  const [product, setProduct] = useState(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
   const [selectedVariant, setSelectedVariant] = useState(null)
-  const [adding, setAdding]         = useState(false)
-  const [added, setAdded]           = useState(false)
+  const [adding, setAdding] = useState(false)
 
   useEffect(() => {
     getProductById(id)
@@ -27,15 +27,32 @@ export function ProductDetail() {
       .finally(() => setLoading(false))
   }, [id])
 
+  // Cantidad de esta variante ya en el carrito
+  const qtyInCart = selectedVariant
+    ? items.filter(i => i.variant?.id === selectedVariant.id)
+           .reduce((sum, i) => sum + i.quantity, 0)
+    : 0
+
+  const stockLeft = selectedVariant ? selectedVariant.stock - qtyInCart : 0
+  const canAdd = selectedVariant && stockLeft > 0
+
   const handleAddToCart = async () => {
     if (!user) { navigate('/login'); return }
-    if (!selectedVariant) return
+    if (!canAdd) {
+      toast.error('No hay más stock disponible para esta talla.')
+      return
+    }
     setAdding(true)
     try {
       await addItem(selectedVariant.id)
-      setAdded(true)
-      setTimeout(() => setAdded(false), 2000)
+      toast.success(`${product.name} (${selectedVariant.size}) añadido al carrito`)
     } catch (err) {
+      const msg = err.message || ''
+      if (msg.includes('Stock insuficiente')) {
+        toast.error('Stock insuficiente para esta cantidad.')
+      } else {
+        toast.error('Error al añadir al carrito.')
+      }
       console.error(err)
     } finally {
       setAdding(false)
@@ -100,7 +117,7 @@ export function ProductDetail() {
             {isOwn && hasVariants ? (
               <>
                 <p className="product-detail-label">Talla</p>
-                <div className="d-flex flex-wrap gap-2 mb-4">
+                <div className="d-flex flex-wrap gap-2 mb-3">
                   {product.variants.map((v) => (
                     <button
                       key={v.id}
@@ -113,18 +130,29 @@ export function ProductDetail() {
                   ))}
                 </div>
 
-                <button
-                  className={`add-cart-btn ${added ? 'added' : ''}`}
-                  onClick={handleAddToCart}
-                  disabled={adding || !selectedVariant}
-                >
-                  {adding ? 'AÑADIENDO...' : added ? '¡AÑADIDO!' : 'AÑADIR AL CARRITO'}
-                </button>
-                {!selectedVariant && (
-                  <p style={{ color: '#888', fontSize: '0.82rem', marginTop: '0.5rem' }}>
-                    Selecciona una talla
+                {selectedVariant && (
+                  <p className={`product-stock-info ${stockLeft === 0 ? 'out' : stockLeft <= 3 ? 'low' : ''}`}>
+                    {selectedVariant.stock === 0
+                      ? 'Sin stock'
+                      : stockLeft <= 0
+                        ? 'Ya tienes el máximo en el carrito'
+                        : stockLeft <= 3
+                          ? `¡Solo quedan ${stockLeft} unidades!`
+                          : `${stockLeft} unidades disponibles`
+                    }
+                    {qtyInCart > 0 && stockLeft > 0 && (
+                      <span className="product-stock-cart"> · {qtyInCart} en tu carrito</span>
+                    )}
                   </p>
                 )}
+
+                <button
+                  className="add-cart-btn"
+                  onClick={handleAddToCart}
+                  disabled={adding || !canAdd}
+                >
+                  {adding ? 'AÑADIENDO...' : !selectedVariant ? 'SELECCIONA UNA TALLA' : !canAdd ? 'SIN STOCK' : 'AÑADIR AL CARRITO'}
+                </button>
               </>
             ) : (
               product.brand?.web_url && (

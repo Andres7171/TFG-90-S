@@ -283,6 +283,25 @@
 .order-line-name { color: #fff; }
 .order-line-price { color: yellow; white-space: nowrap; }
 
+.order-receipt-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: none;
+  border: 1px solid #333;
+  color: #888;
+  font-size: 0.75rem;
+  padding: 0.35rem 0.65rem;
+  margin-top: 0.6rem;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.order-receipt-btn:hover {
+  border-color: yellow;
+  color: yellow;
+}
+
 .order-empty {
   color: #555;
   font-size: 0.88rem;

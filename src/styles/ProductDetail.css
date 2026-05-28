@@ -76,6 +76,24 @@
   width: 100%;
 }
 
+.product-stock-info {
+  font-size: 0.82rem;
+  color: #888;
+  margin-bottom: 0.75rem;
+}
+
+.product-stock-info.low {
+  color: #f59e0b;
+}
+
+.product-stock-info.out {
+  color: #ef4444;
+}
+
+.product-stock-cart {
+  color: #555;
+}
+
 .add-cart-btn:hover:not(:disabled) { background-color: #e6c800; }
 
 .add-cart-btn:disabled { opacity: 0.6; }

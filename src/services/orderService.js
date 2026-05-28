@@ -15,3 +15,19 @@ export async function getMyOrders(userId) {
   if (error) throw error
   return data || []
 }
+
+export async function getOrderById(orderId) {
+  const { data, error } = await supabase
+    .from('order')
+    .select(`
+      id, status, total, mailing_address, created_at,
+      lines:order_line (
+        id, quantity, unit_price, product_name_snapshot, variant_size_snapshot
+      )
+    `)
+    .eq('id', orderId)
+    .single()
+
+  if (error) throw error
+  return data
+}

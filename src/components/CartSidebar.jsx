@@ -4,19 +4,25 @@ import { X } from 'lucide-react'
 import { useCart } from '../context/CartContext'
 import { useAuth } from '../context/AuthContext'
 import { PaymentModal } from './PaymentModal'
+import { getOrderById } from '../services/orderService'
+import { downloadReceipt } from '../utils/receipt'
+import { sendReceiptEmail } from '../services/emailService'
+import { toast } from 'sonner'
 import '../styles/Cart.css'
 
 export function CartSidebar() {
   const { items, cartOpen, setCartOpen, removeItem, updateQty, checkout, totalPrice } = useCart()
-  const { profile } = useAuth()
-  const [address, setAddress]       = useState('')
+  const { user, profile } = useAuth()
+  const [address, setAddress] = useState('')
   const [checkingOut, setCheckingOut] = useState(false)
   const [showAddress, setShowAddress] = useState(false)
-  const [success, setSuccess]       = useState(false)
-  const [error, setError]           = useState(null)
+  const [success, setSuccess] = useState(false)
+  const [error, setError] = useState(null)
 
   // Stripe payment modal
   const [paymentData, setPaymentData] = useState(null)
+  // Pedido completado (para recibo)
+  const [completedOrder, setCompletedOrder] = useState(null)
 
   const handleCheckout = async () => {
     if (!showAddress) {
@@ -38,10 +44,29 @@ export function CartSidebar() {
     }
   }
 
-  const handlePaymentSuccess = () => {
+  const handlePaymentSuccess = async (orderId) => {
     setPaymentData(null)
     setSuccess(true)
     setAddress('')
+
+    // Obtener pedido completo para recibo
+    try {
+      const order = await getOrderById(orderId)
+      setCompletedOrder(order)
+
+      // Enviar recibo por email
+      sendReceiptEmail(order, profile, user?.email)
+        .then(() => toast.success('Recibo enviado a tu email'))
+        .catch(() => toast.error('No se pudo enviar el recibo por email'))
+    } catch (err) {
+      console.error('Error al cargar pedido para recibo:', err)
+    }
+  }
+
+  const handleDownloadReceipt = () => {
+    if (completedOrder) {
+      downloadReceipt(completedOrder, profile, user?.email)
+    }
   }
 
   const handlePaymentCancel = () => {
@@ -55,6 +80,7 @@ export function CartSidebar() {
     setAddress('')
     setError(null)
     setPaymentData(null)
+    setCompletedOrder(null)
     if (success) setSuccess(false)
   }
 
@@ -96,6 +122,11 @@ export function CartSidebar() {
               {success ? (
                 <div className="cart-success">
                   <p className="cart-success-text">¡Pedido realizado y pagado con éxito!</p>
+                  {completedOrder && (
+                    <button className="cart-receipt-btn" onClick={handleDownloadReceipt}>
+                      DESCARGAR RECIBO PDF
+                    </button>
+                  )}
                   <button className="cart-checkout-btn" onClick={handleClose}>
                     CERRAR
                   </button>
@@ -123,7 +154,11 @@ export function CartSidebar() {
                               <div className="cart-qty-controls">
                                 <button className="cart-qty-btn" onClick={() => updateQty(item.id, item.quantity - 1)}>−</button>
                                 <span className="cart-qty-num">{item.quantity}</span>
-                                <button className="cart-qty-btn" onClick={() => updateQty(item.id, item.quantity + 1)}>+</button>
+                                <button
+                                  className="cart-qty-btn"
+                                  disabled={item.quantity >= (item.variant?.stock ?? 0)}
+                                  onClick={() => updateQty(item.id, item.quantity + 1)}
+                                >+</button>
                               </div>
                               <button className="cart-remove-btn" onClick={() => removeItem(item.id)}>
                                 Eliminar

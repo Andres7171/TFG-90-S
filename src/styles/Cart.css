@@ -189,3 +189,23 @@
   font-size: 1rem;
   margin-bottom: 1rem;
 }
+
+.cart-receipt-btn {
+  display: block;
+  width: 100%;
+  background: transparent;
+  border: 1px solid #333;
+  color: #ccc;
+  font-family: Impact, sans-serif;
+  font-size: 0.9rem;
+  padding: 0.6rem;
+  margin-bottom: 0.75rem;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.cart-receipt-btn:hover {
+  border-color: yellow;
+  color: yellow;
+}

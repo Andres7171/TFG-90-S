@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import { X, ChevronDown, MessageCircle, User, Pencil } from 'lucide-react'
+import { X, ChevronDown, MessageCircle, User, Pencil, Download } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { getMyOrders } from '../services/orderService'
 import { updateUserProfile } from '../services/authService'
+import { downloadReceipt } from '../utils/receipt'
 import { toast } from 'sonner'
 import '../styles/ProfileSidebar.css'
 
@@ -239,6 +240,17 @@ export function ProfileSidebar({ open, onClose }) {
                         <div style={{ fontSize: '0.78rem', color: '#555', marginTop: '0.5rem' }}>
                           Enviado a: {order.mailing_address}
                         </div>
+                        {order.status === 'paid' && (
+                          <button
+                            className="order-receipt-btn"
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              downloadReceipt(order, profile, user?.email)
+                            }}
+                          >
+                            <Download size={13} /> Descargar recibo
+                          </button>
+                        )}
                       </div>
                     )}
                   </div>
