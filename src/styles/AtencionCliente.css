@@ -1,61 +1,60 @@
 .atencion-page {
-  background-color: #000;
   min-height: 100vh;
-  color: #fff;
 }
 
 .atencion-title {
-  font-family: Impact, sans-serif;
-  color: yellow;
+  font-family: var(--font-display);
+  color: var(--color-accent);
   font-size: 3rem;
 }
 
 .atencion-subtitle {
-  color: #aaa;
+  color: var(--color-text-muted);
   font-size: 1rem;
 }
 
 .atencion-card {
-  background-color: #111;
-  border: 1px solid #222;
+  background-color: var(--color-bg-card);
+  border: 1px solid var(--color-border);
   max-width: 600px;
 }
 
 .atencion-label {
-  color: #aaa;
+  color: var(--color-text-muted);
   font-size: 0.8rem;
   text-transform: uppercase;
 }
 
 .atencion-input {
-  background-color: #1a1a1a;
-  border-color: #333;
-  color: #fff;
+  background-color: var(--color-bg-input);
+  border-color: var(--color-border-light);
+  color: var(--color-text);
 }
 
 .atencion-input:focus {
-  background-color: #1a1a1a;
-  color: #fff;
-  border-color: yellow;
+  background-color: var(--color-bg-input);
+  color: var(--color-text);
+  border-color: var(--color-accent);
   box-shadow: none;
 }
 
 .atencion-btn {
-  background-color: yellow;
-  color: #000;
-  font-family: Impact, sans-serif;
+  background-color: var(--color-accent);
+  color: var(--color-bg);
+  font-family: var(--font-display);
   font-size: 1.1rem;
   border: none;
+  transition: background-color var(--transition);
 }
 
 .atencion-btn:hover {
-  background-color: #e6e600;
-  color: #000;
+  background-color: var(--color-accent-hover);
+  color: var(--color-bg);
 }
 
 .atencion-btn:disabled {
-  background-color: yellow;
-  color: #000;
+  background-color: var(--color-accent);
+  color: var(--color-bg);
   opacity: 0.5;
 }
 
@@ -64,8 +63,13 @@
 }
 
 .atencion-success-text {
-  color: yellow;
-  font-family: Impact, sans-serif;
+  color: var(--color-accent);
+  font-family: var(--font-display);
   font-size: 1.3rem;
 }
 
+@media (max-width: 768px) {
+  .atencion-title {
+    font-size: 2rem;
+  }
+}

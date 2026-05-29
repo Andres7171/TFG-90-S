@@ -2,15 +2,16 @@ import { useState } from 'react'
 import emailjs from '@emailjs/browser'
 import '../styles/AtencionCliente.css'
 
-const EMAILJS_SERVICE_ID  = 'service_mseebnc'
-const EMAILJS_TEMPLATE_ID = 'template_ru1q2gr'
-const EMAILJS_PUBLIC_KEY  = 'ZT-9TsL6BXsLOJ4ng'
+const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID
+const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_CONTACT_TEMPLATE_ID
+const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+
 
 export function AtencionCliente() {
-  const [form, setForm]       = useState({ name: '', email: '', message: '' })
+  const [form, setForm] = useState({ name: '', email: '', message: '' })
   const [submitted, setSubmitted] = useState(false)
   const [loading, setLoading] = useState(false)
-  const [error, setError]     = useState(null)
+  const [error, setError] = useState(null)
 
   const handleChange = (e) =>
     setForm({ ...form, [e.target.name]: e.target.value })

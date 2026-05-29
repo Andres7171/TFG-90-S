@@ -1,69 +1,63 @@
-.logo-text {
-  font-family: 'Impact', sans-serif;
-  font-size: 1.8rem;
-  color: yellow;
-}
-
 .header {
-  background-color: #000;
+  background-color: var(--color-bg);
 }
 
 .contenedor {
-  background-color: #000;
+  background-color: var(--color-bg);
+}
+
+.logo-text {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  color: var(--color-accent);
 }
 
 .nav-item-custom {
-  color: #ccc;
+  color: var(--color-text-light);
   font-size: 0.8rem;
   text-transform: uppercase;
   text-decoration: none;
   white-space: nowrap;
+  transition: color var(--transition);
 }
 
 .nav-item-custom:hover,
 .nav-item-active {
-  color: yellow;
+  color: var(--color-accent);
 }
 
-.user-btn-round {
+.user-btn-round,
+.cart-btn-round {
   width: 42px;
   height: 42px;
   border-radius: 50%;
   background-color: #f1f5f9;
   border: 1px solid #cbd5e1;
+  transition: border-color var(--transition);
 }
 
-.user-btn-round:hover {
-  border-color: yellow;
+.user-btn-round:hover,
+.cart-btn-round:hover {
+  border-color: var(--color-accent);
   background-color: #e2e8f0;
 }
 
 .cart-btn-round {
   position: relative;
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  background-color: #f1f5f9;
-  border: 1px solid #cbd5e1;
-}
-
-.cart-btn-round:hover {
-  border-color: yellow;
-  background-color: #e2e8f0;
 }
 
 .admin-panel-btn {
   width: 42px;
   height: 42px;
   border-radius: 50%;
-  background-color: #FFD700;
+  background-color: var(--color-accent);
   border: none;
-  color: #000;
+  color: var(--color-bg);
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: opacity 0.2s;
+  transition: opacity var(--transition);
 }
 
 .admin-panel-btn:hover {
@@ -74,8 +68,8 @@
   position: absolute;
   top: -4px;
   right: -4px;
-  background-color: yellow;
-  color: #000;
+  background-color: var(--color-accent);
+  color: var(--color-bg);
   font-size: 0.65rem;
   font-weight: bold;
   width: 18px;
@@ -85,4 +79,21 @@
   align-items: center;
   justify-content: center;
   line-height: 1;
+}
+
+@media (max-width: 768px) {
+  .logo-text {
+    font-size: 1.4rem;
+  }
+
+  .nav-item-custom {
+    font-size: 0.72rem;
+  }
+
+  .user-btn-round,
+  .cart-btn-round,
+  .admin-panel-btn {
+    width: 36px;
+    height: 36px;
+  }
 }

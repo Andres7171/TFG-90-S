@@ -3,7 +3,7 @@ import "./../styles/Slider.css";
 
 const SLIDER_ITEMS = [
   "WORLDWIDE SHIPPING",
-  "90'S TYPE SHIT",
+  "RETROWEAR",
   "HIP HOP CULTURE",
 ];
 

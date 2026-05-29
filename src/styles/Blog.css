@@ -1,36 +1,44 @@
 .blog-page {
-  background-color: #000;
   min-height: 100vh;
-  color: #fff;
 }
 
 .blog-title {
-  font-family: Impact, sans-serif;
-  color: yellow;
+  font-family: var(--font-display);
+  color: var(--color-accent);
   font-size: 3.5rem;
 }
 
 .blog-eyebrow {
-  color: #888;
+  color: var(--color-text-dim);
   font-size: 1rem;
   text-transform: uppercase;
 }
 
 .blog-section {
-  border-left: 3px solid yellow;
-  padding-left: 1.5rem;
+  border-left: 3px solid var(--color-accent);
+  padding-left: var(--space-xl);
   max-width: 800px;
 }
 
 .blog-section-title {
-  font-family: Impact, sans-serif;
-  color: yellow;
+  font-family: var(--font-display);
+  color: var(--color-accent);
   font-size: 1.5rem;
-  margin-bottom: 0.75rem;
+  margin-bottom: var(--space-md);
 }
 
 .blog-text {
-  color: #ccc;
+  color: var(--color-text-light);
   font-size: 1rem;
   line-height: 1.8;
+}
+
+@media (max-width: 768px) {
+  .blog-title {
+    font-size: 2.2rem;
+  }
+
+  .blog-section {
+    padding-left: var(--space-lg);
+  }
 }

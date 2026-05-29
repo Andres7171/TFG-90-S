@@ -1,91 +1,92 @@
 .auth-wrapper {
-  background: #000;
+  background: var(--color-bg);
 }
 
 .auth-card {
-  background: #111;
-  border: 2px solid yellow;
+  background: var(--color-bg-card);
+  border: 2px solid var(--color-accent);
   max-width: 440px;
   width: 100%;
 }
 
 .auth-title {
-  font-family: Impact, sans-serif;
-  color: yellow;
+  font-family: var(--font-display);
+  color: var(--color-accent);
   font-size: 2rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: var(--space-xl);
 }
 
 .auth-back-link {
   display: inline-block;
-  color: #666;
+  color: var(--color-text-faint);
   font-size: 0.8rem;
   text-decoration: none;
-  margin-bottom: 1rem;
-  transition: color 0.2s;
+  margin-bottom: var(--space-lg);
+  transition: color var(--transition);
 }
 
 .auth-back-link:hover {
-  color: yellow;
+  color: var(--color-accent);
 }
 
 .auth-card .form-label {
-  color: #aaa;
+  color: var(--color-text-muted);
   font-size: 0.8rem;
   text-transform: uppercase;
 }
 
 .auth-input {
-  background-color: #1a1a1a;
-  border-color: #333;
-  color: #fff;
+  background-color: var(--color-bg-input);
+  border-color: var(--color-border-light);
+  color: var(--color-text);
 }
 
 .auth-input:focus {
-  background-color: #1a1a1a;
-  color: #fff;
-  border-color: yellow;
+  background-color: var(--color-bg-input);
+  color: var(--color-text);
+  border-color: var(--color-accent);
   box-shadow: none;
 }
 
 .auth-btn {
-  background-color: yellow;
-  color: #000;
-  font-family: Impact, sans-serif;
+  background-color: var(--color-accent);
+  color: var(--color-bg);
+  font-family: var(--font-display);
   font-size: 1.1rem;
   border: none;
+  transition: background-color var(--transition);
 }
 
 .auth-btn:hover,
 .auth-btn:focus,
 .auth-btn:active {
-  background-color: #e6e600;
-  color: #000;
+  background-color: var(--color-accent-hover);
+  color: var(--color-bg);
   box-shadow: none;
 }
 
 .auth-btn:disabled {
-  background-color: yellow;
-  color: #000;
+  background-color: var(--color-accent);
+  color: var(--color-bg);
   opacity: 0.5;
 }
 
 .auth-switch {
-  color: #666;
+  color: var(--color-text-faint);
   font-size: 0.85rem;
 }
 
 .auth-switch a {
-  color: yellow;
+  color: var(--color-accent);
   text-decoration: none;
 }
 
 .auth-divider {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: var(--space-lg);
   margin: 1.25rem 0;
-  color: #555;
+  color: var(--color-text-faint);
   font-size: 0.8rem;
   text-transform: uppercase;
 }
@@ -95,20 +96,32 @@
   content: '';
   flex: 1;
   height: 1px;
-  background: #333;
+  background: var(--color-border-light);
 }
 
 .auth-google-btn {
   background-color: transparent;
-  color: #ccc;
-  border: 1px solid #333;
-  font-family: Impact, sans-serif;
+  color: var(--color-text-light);
+  border: 1px solid var(--color-border-light);
+  font-family: var(--font-display);
   font-size: 1rem;
   padding: 0.6rem;
-  transition: border-color 0.2s, color 0.2s;
+  transition: border-color var(--transition), color var(--transition);
 }
 
 .auth-google-btn:hover {
-  border-color: yellow;
-  color: #fff;
+  border-color: var(--color-accent);
+  color: var(--color-text);
+}
+
+@media (max-width: 480px) {
+  .auth-card {
+    border-left: none;
+    border-right: none;
+    max-width: 100%;
+  }
+
+  .auth-title {
+    font-size: 1.6rem;
+  }
 }

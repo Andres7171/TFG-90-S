@@ -1,14 +1,47 @@
 :root {
-  --color-bg:        #000;
-  --color-bg-card:   #111;
-  --color-bg-input:  #1a1a1a;
-  --color-border:    #222;
+  /* Backgrounds */
+  --color-bg: #000;
+  --color-bg-card: #111;
+  --color-bg-input: #1a1a1a;
+  --color-bg-hover: #222;
+
+  /* Borders */
+  --color-border: #222;
   --color-border-light: #333;
-  --color-text:      #fff;
+
+  /* Text */
+  --color-text: #fff;
+  --color-text-light: #ccc;
   --color-text-muted: #aaa;
-  --color-accent:    #FFD700;
-  --font-display:    Impact, sans-serif;
-  --font-body:       system-ui, sans-serif;
+  --color-text-dim: #888;
+  --color-text-faint: #555;
+
+  /* Accent */
+  --color-accent: #FFD700;
+  --color-accent-hover: #e6c800;
+
+  /* Semantic */
+  --color-success: #4ade80;
+  --color-error: #ef4444;
+  --color-warning: #f59e0b;
+
+  /* Typography */
+  --font-display: Impact, sans-serif;
+  --font-body: system-ui, sans-serif;
+
+  /* Spacing */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 0.75rem;
+  --space-lg: 1rem;
+  --space-xl: 1.5rem;
+  --space-2xl: 2rem;
+
+  /* Transitions */
+  --transition: 0.2s ease;
+
+  /* Sidebar width */
+  --sidebar-width: 380px;
 }
 
 *, *::before, *::after {
@@ -22,20 +55,84 @@ body {
   color: var(--color-text);
   font-family: var(--font-body);
   min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* Filtros compartidos */
+.page-title {
+  font-family: var(--font-display);
+  color: var(--color-accent);
+}
+
+.search-input {
+  background-color: var(--color-bg-input);
+  border: 1px solid var(--color-border-light);
+  color: var(--color-text);
+  padding: var(--space-sm) var(--space-md);
+  font-size: 0.9rem;
+  width: 100%;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: var(--color-accent);
+  background-color: var(--color-bg-input);
+  box-shadow: none;
+}
+
+.btn-accent {
+  background-color: var(--color-accent);
+  color: var(--color-bg);
+  font-family: var(--font-display);
+  border: none;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: background-color var(--transition);
+}
+
+.btn-accent:hover:not(:disabled) {
+  background-color: var(--color-accent-hover);
+}
+
+.btn-accent:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-ghost {
+  background: none;
+  border: 1px solid var(--color-border-light);
+  color: var(--color-text-dim);
+  cursor: pointer;
+  transition: border-color var(--transition), color var(--transition);
+}
+
+.btn-ghost:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.card-base {
+  background-color: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+  transition: border-color var(--transition);
+}
+
+.card-base:hover {
+  border-color: var(--color-accent);
+}
+
 .store-filters {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
-  margin-bottom: 1.5rem;
+  gap: var(--space-md);
+  margin-bottom: var(--space-xl);
 }
 
 .filter-group {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: var(--space-sm);
   flex-wrap: wrap;
 }
 
@@ -50,16 +147,16 @@ body {
 .filter-btn {
   background: none;
   border: 1px solid var(--color-border-light);
-  color: #888;
+  color: var(--color-text-dim);
   font-size: 0.78rem;
   padding: 0.3rem 0.75rem;
   cursor: pointer;
-  transition: border-color 0.2s, color 0.2s;
+  transition: border-color var(--transition), color var(--transition);
 }
 
 .filter-btn:hover {
-  border-color: #888;
-  color: #ccc;
+  border-color: var(--color-text-dim);
+  color: var(--color-text-light);
 }
 
 .filter-btn.active {
@@ -70,7 +167,7 @@ body {
 .filter-reset {
   background: none;
   border: 1px solid #444;
-  color: #666;
+  color: var(--color-text-faint);
   font-size: 0.75rem;
   padding: 0.3rem 0.75rem;
   cursor: pointer;
@@ -78,6 +175,34 @@ body {
 }
 
 .filter-reset:hover {
-  border-color: #888;
-  color: #ccc;
+  border-color: var(--color-text-dim);
+  color: var(--color-text-light);
+}
+
+@media (max-width: 768px) {
+  :root {
+    --sidebar-width: 100vw;
+  }
+
+  .filter-label {
+    min-width: auto;
+    width: 100%;
+  }
+
+  .filter-group {
+    gap: 0.35rem;
+  }
+
+  .filter-btn {
+    font-size: 0.72rem;
+    padding: 0.25rem 0.6rem;
+  }
+}
+
+.home-search::placeholder,
+.ninetys-search::placeholder,
+.search-input::placeholder,
+.cart-address-input::placeholder {
+  color: var(--color-text-dim);
+  opacity: 1;
 }

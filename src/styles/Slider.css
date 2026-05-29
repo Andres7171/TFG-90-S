@@ -1,12 +1,20 @@
 .sliderHeader {
-  background-color: #000;
+  background-color: var(--color-bg);
 }
+
 .slider-item {
-  font-family: Impact, "Arial Black", sans-serif;
-  color: yellow;
+  font-family: var(--font-display);
+  color: var(--color-accent);
   white-space: nowrap;
-  padding: 0 3rem;       /* espacio entre frases */
+  padding: 0 3rem;
   font-size: 1rem;
   letter-spacing: 2px;
-padding-right: 10px;
+  padding-right: 10px;
+}
+
+@media (max-width: 768px) {
+  .slider-item {
+    font-size: 0.85rem;
+    padding: 0 1.5rem;
+  }
 }

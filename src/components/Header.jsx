@@ -8,11 +8,11 @@ import { useState } from 'react'
 import '../styles/Header.css'
 
 const NAV_LINKS = [
-  { label: 'Inicio',              to: '/',                 end: true },
-  { label: "90's Type Shit",      to: '/90s' },
-  { label: 'Blog',                to: '/blog' },
-  { label: 'Eventos',             to: '/eventos' },
-  { label: 'Colaboradores',       to: '/colaboradores' },
+  { label: 'Inicio', to: '/', end: true },
+  { label: "90's Type Shit", to: '/90s' },
+  { label: 'Blog', to: '/blog' },
+  { label: 'Eventos', to: '/eventos' },
+  { label: 'Colaboradores', to: '/colaboradores' },
   { label: 'Atención al Cliente', to: '/atencion-cliente' },
 ]
 
@@ -45,7 +45,7 @@ export function Header() {
           <div className="row align-items-center">
 
             <div className="col-3">
-              <h1 className="logo-text m-2">90'S TYPE SHIT</h1>
+              <h1 className="logo-text m-2">RETROWEAR</h1>
             </div>
 
             <div className="col-6">

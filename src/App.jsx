@@ -23,6 +23,8 @@ import { AdminMarcas } from './pages/admin/AdminMarcas'
 import { AdminMarcaForm } from './pages/admin/AdminMarcaForm'
 import { AdminPedidos } from './pages/admin/AdminPedidos'
 import { AdminPedidoEdit } from './pages/admin/AdminPedidoEdit'
+import { AdminDashboard } from './pages/admin/AdminDashboard'
+import { NotFound } from './pages/NotFound'
 
 function Layout({ children }) {
   return (
@@ -69,7 +71,8 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
 
-        <Route path="/admin" element={<AdminGuard><Navigate to="/admin/productos" replace /></AdminGuard>} />
+        <Route path="/admin" element={<AdminGuard><Navigate to="/admin/dashboard" replace /></AdminGuard>} />
+        <Route path="/admin/dashboard" element={<AdminGuard><AdminDashboard /></AdminGuard>} />
         <Route path="/admin/productos" element={<AdminGuard><AdminProductos /></AdminGuard>} />
         <Route path="/admin/productos/nuevo" element={<AdminGuard><AdminProductoForm /></AdminGuard>} />
         <Route path="/admin/productos/:id" element={<AdminGuard><AdminProductoForm /></AdminGuard>} />
@@ -84,6 +87,8 @@ function App() {
         <Route path="/admin/colaboradores/:id" element={<AdminGuard><AdminColabForm /></AdminGuard>} />
         <Route path="/admin/pedidos" element={<AdminGuard><AdminPedidos /></AdminGuard>} />
         <Route path="/admin/pedidos/:id" element={<AdminGuard><AdminPedidoEdit /></AdminGuard>} />
+
+        <Route path="*" element={<Layout><NotFound /></Layout>} />
       </Routes>
     </>
   )

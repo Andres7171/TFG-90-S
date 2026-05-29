@@ -1,45 +1,43 @@
 .ninetys-page {
-  background-color: #000;
   min-height: 100vh;
-  color: #fff;
 }
 
 .ninetys-title {
-  font-family: Impact, sans-serif;
-  color: yellow;
+  font-family: var(--font-display);
+  color: var(--color-accent);
   font-size: 2.8rem;
 }
 
 .ninetys-subtitle {
-  color: #888;
+  color: var(--color-text-dim);
   font-size: 0.95rem;
   text-transform: uppercase;
   letter-spacing: 2px;
 }
 
 .ninetys-search {
-  background-color: #1a1a1a;
-  border-color: #333;
-  color: #fff;
-  max-width: 400px;
+  background-color: var(--color-bg-input);
+  border-color: var(--color-border-light);
+  color: var(--color-text);
 }
 
 .ninetys-search:focus {
-  background-color: #1a1a1a;
-  color: #fff;
-  border-color: yellow;
+  background-color: var(--color-bg-input);
+  color: var(--color-text);
+  border-color: var(--color-accent);
   box-shadow: none;
 }
 
 .ninetys-card {
-  background-color: #111;
-  border: 1px solid #222;
+  background-color: var(--color-bg-card);
+  border: 1px solid var(--color-border);
   cursor: pointer;
   overflow: hidden;
+  transition: border-color var(--transition);
 }
 
 .ninetys-card:hover {
-  border-color: yellow;
+  border-color: var(--color-accent);
 }
 
 .ninetys-card-img {
@@ -50,24 +48,24 @@
 }
 
 .ninetys-card-body {
-  padding: 1rem;
+  padding: var(--space-lg);
 }
 
 .ninetys-card-name {
-  font-family: Impact, sans-serif;
+  font-family: var(--font-display);
   font-size: 1.2rem;
-  color: #fff;
+  color: var(--color-text);
   margin: 0 0 0.15rem;
 }
 
 .ninetys-card-brand {
-  color: #888;
+  color: var(--color-text-dim);
   font-size: 0.78rem;
   margin: 0 0 0.4rem;
 }
 
 .ninetys-card-price {
-  color: yellow;
+  color: var(--color-accent);
   font-weight: bold;
   font-size: 1.1rem;
   margin: 0 0 0.75rem;
@@ -81,9 +79,9 @@
 
 .ninetys-size-tag {
   padding: 0.2rem 0.6rem;
-  background: #1a1a1a;
+  background: var(--color-bg-input);
   border: 1px solid #444;
-  color: #ccc;
+  color: var(--color-text-light);
   font-size: 0.75rem;
   border-radius: 3px;
 }
@@ -95,15 +93,30 @@
 
 .ninetys-ver-btn {
   width: 100%;
-  background-color: yellow;
-  color: #000;
-  font-family: Impact, sans-serif;
+  background-color: var(--color-accent);
+  color: var(--color-bg);
+  font-family: var(--font-display);
   font-size: 0.95rem;
   letter-spacing: 1px;
   border: none;
   padding: 0.55rem;
+  transition: background-color var(--transition);
 }
 
 .ninetys-ver-btn:hover {
-  background-color: #e6c800;
+  background-color: var(--color-accent-hover);
+}
+
+@media (max-width: 768px) {
+  .ninetys-title {
+    font-size: 2rem;
+  }
+
+  .ninetys-search {
+    max-width: 100%;
+  }
+
+  .ninetys-card-img {
+    height: 240px;
+  }
 }

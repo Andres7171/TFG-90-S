@@ -4,6 +4,7 @@ import { useAuth } from '../../context/AuthContext'
 import '../../styles/Admin.css'
 
 const ADMIN_LINKS = [
+  { label: 'Dashboard', to: '/admin/dashboard' },
   { label: 'Todos los Productos', to: '/admin/productos' },
   { label: "90's Type Shit", to: '/admin/90s' },
   { label: 'Marcas', to: '/admin/marcas' },

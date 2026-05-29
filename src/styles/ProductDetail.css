@@ -1,7 +1,5 @@
 .product-detail-page {
-  background-color: #000;
   min-height: 100vh;
-  color: #fff;
 }
 
 .product-detail-img {
@@ -11,52 +9,57 @@
 }
 
 .product-detail-name {
-  font-family: Impact, sans-serif;
+  font-family: var(--font-display);
   font-size: 2rem;
-  color: #fff;
-  margin-bottom: 0.25rem;
+  color: var(--color-text);
+  margin-bottom: var(--space-xs);
 }
 
 .product-detail-brand {
-  color: #888;
+  color: var(--color-text-dim);
   font-size: 0.9rem;
-  margin-bottom: 1rem;
+  margin-bottom: var(--space-lg);
 }
 
 .product-detail-price {
-  color: yellow;
-  font-family: Impact, sans-serif;
+  color: var(--color-accent);
+  font-family: var(--font-display);
   font-size: 1.8rem;
   margin-bottom: 1.25rem;
 }
 
 .product-detail-label {
   font-size: 0.85rem;
-  color: #aaa;
+  color: var(--color-text-muted);
   text-transform: uppercase;
   letter-spacing: 1px;
-  margin-bottom: 0.5rem;
+  margin-bottom: var(--space-sm);
 }
 
 .size-btn {
   padding: 0.4rem 0.9rem;
-  background: #1a1a1a;
-  border: 1px solid #333;
-  color: #fff;
+  background: var(--color-bg-input);
+  border: 1px solid var(--color-border-light);
+  color: var(--color-text);
   font-size: 0.85rem;
   border-radius: 4px;
+  transition: border-color var(--transition), color var(--transition);
 }
 
-.size-btn:hover:not(:disabled) {
-  border-color: yellow;
-  color: yellow;
+.size-btn:hover:not(:disabled):not(.selected) {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
 }
 
 .size-btn.selected {
-  background: yellow;
-  border-color: yellow;
-  color: #000;
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: var(--color-bg);
   font-weight: bold;
+}
+
+.size-btn.selected:hover {
+  background: var(--color-accent-hover);
 }
 
 .size-btn:disabled {
@@ -65,66 +68,85 @@
   text-decoration: line-through;
 }
 
+.product-stock-info {
+  font-size: 0.82rem;
+  color: var(--color-text-dim);
+  margin-bottom: var(--space-md);
+}
+
+.product-stock-info.low {
+  color: var(--color-warning);
+}
+
+.product-stock-info.out {
+  color: var(--color-error);
+}
+
+.product-stock-cart {
+  color: var(--color-text-faint);
+}
+
 .add-cart-btn {
-  background-color: yellow;
-  color: #000;
-  font-family: Impact, sans-serif;
+  background-color: var(--color-accent);
+  color: var(--color-bg);
+  font-family: var(--font-display);
   font-size: 1.1rem;
   letter-spacing: 1px;
   border: none;
   padding: 0.7rem 2rem;
   width: 100%;
+  transition: background-color var(--transition);
 }
 
-.product-stock-info {
-  font-size: 0.82rem;
-  color: #888;
-  margin-bottom: 0.75rem;
-}
-
-.product-stock-info.low {
-  color: #f59e0b;
-}
-
-.product-stock-info.out {
-  color: #ef4444;
-}
-
-.product-stock-cart {
-  color: #555;
-}
-
-.add-cart-btn:hover:not(:disabled) { background-color: #e6c800; }
-
+.add-cart-btn:hover:not(:disabled) { background-color: var(--color-accent-hover); }
 .add-cart-btn:disabled { opacity: 0.6; }
 
 .add-cart-btn.added {
-  background-color: #4ade80;
-  color: #000;
+  background-color: var(--color-success);
+  color: var(--color-bg);
 }
 
 .product-detail-back {
   background: none;
   border: none;
-  color: #aaa;
+  color: var(--color-text-muted);
   font-size: 0.85rem;
   padding: 0;
-  margin-bottom: 1.5rem;
+  margin-bottom: var(--space-xl);
   display: flex;
   align-items: center;
   gap: 0.3rem;
+  transition: color var(--transition);
 }
 
-.product-detail-back:hover { color: yellow; }
+.product-detail-back:hover { color: var(--color-accent); }
 
 .web-brand-btn {
   background: none;
-  border: 1px solid yellow;
-  color: yellow;
-  font-family: Impact, sans-serif;
+  border: 1px solid var(--color-accent);
+  color: var(--color-accent);
+  font-family: var(--font-display);
   font-size: 1rem;
   padding: 0.6rem 1.5rem;
   width: 100%;
+  transition: background-color var(--transition), color var(--transition);
 }
 
-.web-brand-btn:hover { background-color: yellow; color: #000; }
+.web-brand-btn:hover {
+  background-color: var(--color-accent);
+  color: var(--color-bg);
+}
+
+@media (max-width: 768px) {
+  .product-detail-name {
+    font-size: 1.5rem;
+  }
+
+  .product-detail-price {
+    font-size: 1.4rem;
+  }
+
+  .product-detail-img {
+    max-height: 350px;
+  }
+}
