@@ -26,7 +26,7 @@ export function generateReceiptPDF(order, profile, userEmail) {
   doc.setFont('helvetica', 'bold')
   doc.setFontSize(24)
   doc.setTextColor(...gold)
-  doc.text("90'S TYPE SHIT", margin, 20)
+  doc.text("RETROWEAR", margin, 20)
 
   doc.setFontSize(10)
   doc.setTextColor(...white)
