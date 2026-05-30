@@ -9,7 +9,7 @@ import '../styles/Header.css'
 
 const NAV_LINKS = [
   { label: 'Inicio', to: '/', end: true },
-  { label: "90's Type Shit", to: '/90s' },
+  { label: "RetroWear", to: '/90s' },
   { label: 'Blog', to: '/blog' },
   { label: 'Eventos', to: '/eventos' },
   { label: 'Colaboradores', to: '/colaboradores' },

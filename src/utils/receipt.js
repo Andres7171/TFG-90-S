@@ -140,7 +140,7 @@ export function generateReceiptPDF(order, profile, userEmail) {
   doc.setTextColor(...gray)
   doc.text('Gracias por tu compra. Este recibo se ha generado automáticamente.', margin, y)
   y += 5
-  doc.text("90's Type Shit — Moda retro con alma de los 90.", margin, y)
+  doc.text("RetroWear — Moda retro con alma de los 90.", margin, y)
   y += 5
   doc.text('Si tienes algún problema con tu pedido, contacta con nosotros desde la página web.', margin, y)
 

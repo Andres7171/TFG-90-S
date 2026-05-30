@@ -6,7 +6,7 @@ import '../../styles/Admin.css'
 const ADMIN_LINKS = [
   { label: 'Dashboard', to: '/admin/dashboard' },
   { label: 'Todos los Productos', to: '/admin/productos' },
-  { label: "90's Type Shit", to: '/admin/90s' },
+  { label: "RetroWear", to: '/admin/90s' },
   { label: 'Marcas', to: '/admin/marcas' },
   { label: 'Colaboradores', to: '/admin/colaboradores' },
   { label: 'Pedidos', to: '/admin/pedidos' },
