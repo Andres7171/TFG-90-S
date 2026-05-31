@@ -161,7 +161,7 @@ export async function deleteProduct(id) {
 }
 
 export async function toggleProductActive(id, currentActive) {
-  const { error } = await supabaseAdmin
+  const { error } = await supabase
     .from('product')
     .update({ active: !currentActive })
     .eq('id', id)
@@ -169,7 +169,7 @@ export async function toggleProductActive(id, currentActive) {
 }
 
 export async function toggleBrandActive(id, currentActive) {
-  const { error } = await supabaseAdmin
+  const { error } = await supabase
     .from('brand')
     .update({ active: !currentActive })
     .eq('id', id)

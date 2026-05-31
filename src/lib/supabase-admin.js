@@ -7,7 +7,7 @@ if (!globalThis.__supabase_admin__) {
   globalThis.__supabase_admin__ = createClient(supabaseUrl, supabaseAnonKey, {
     auth: {
       persistSession: true,
-      autoRefreshToken: false,
+      autoRefreshToken: true,
       detectSessionInUrl: false,
       storageKey: 'sb-admin-session',
       lock: async (_name, _timeout, fn) => fn(),
