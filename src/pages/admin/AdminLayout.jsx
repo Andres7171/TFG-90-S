@@ -28,7 +28,7 @@ export function AdminLayout({ children }) {
           <div className="row align-items-center">
 
             <div className="col-auto d-flex align-items-center">
-              <span className="admin-logo">90'S TYPE SHIT</span>
+              <span className="admin-logo">RetroWear</span>
               <span className="admin-badge">MODO ADMINISTRADOR</span>
             </div>
 

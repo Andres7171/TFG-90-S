@@ -61,7 +61,7 @@ export function NinetyS() {
     <div className="ninetys-page">
       <div className="container py-5">
 
-        <h1 className="ninetys-title mb-2">90'S TYPE SHIT</h1>
+        <h1 className="ninetys-title mb-2">RETROWEAR</h1>
         <p className="ninetys-subtitle mb-4">Nuestras piezas. Stock limitado.</p>
 
         <div className="mb-4">
